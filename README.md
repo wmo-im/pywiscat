@@ -5,7 +5,7 @@ pywiscat
 Pythonic API to WMO WIS Catalogue
 
 pywiscat provides a Pythonic API atop of the WMO WIS Catalogue in support
-of reporting and analysis of WIS Catalogue metadata.
+of reporting and analysis of WIS metadata.
 
 ## Installation
 
