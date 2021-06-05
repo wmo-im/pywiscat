@@ -1,11 +1,11 @@
-pywiscat
+# pywiscat
 
 [![Build Status](https://github.com/wmo-im/pywiscat/workflows/build%20%E2%9A%99%EF%B8%8F/badge.svg)](https://github.com/wmo-im/pywiscat/actions)
 
-Pythonic API to WMO WIS Catalogue
+## Pythonic API to WMO WIS Catalogue
 
-pywiscat provides a Pythonic API atop of the WMO WIS Catalogue in support
-of reporting and analysis of WIS metadata.
+pywiscat provides a Pythonic API atop the WMO WIS Catalogue in support
+of reporting and analysis of the WIS Catalogue and Metadata.
 
 ## Installation
 
