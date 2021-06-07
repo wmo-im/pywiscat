@@ -1,8 +1,9 @@
 # =================================================================
 #
-# Authors: Tom Kralidis <tomkralidis@gmail.com>
+# Authors: Tom Kralidis <tomkralidis@gmail.com>, Ján Osuský
 #
 # Copyright (c) 2021 Tom Kralidis
+# Copyright (c) 2021 IBL Software Engineering spol. s r. o.
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -28,6 +29,7 @@
 # =================================================================
 
 import io
+import json
 import logging
 import os
 from urllib.request import urlopen
@@ -36,6 +38,7 @@ import tarfile
 import click
 
 from pywiscat.cli_helpers import cli_callbacks, cli_option_directory
+from pywiscat.wis1.util import search_files_by_term
 
 LOGGER = logging.getLogger(__name__)
 
@@ -80,3 +83,22 @@ def cache(ctx, directory, verbosity):
 
 
 catalogue.add_command(cache)
+
+
+@click.command()
+@click.pass_context
+@cli_callbacks
+@cli_option_directory
+@click.option('--term', '-t', 'terms', multiple=True, required=True)
+def search(ctx, terms, directory, verbosity):
+    """Searches terms in the catalog (local directory with MD XML)"""
+
+    results = search_files_by_term(directory, terms)
+
+    if results:
+        click.echo(json.dumps(results, indent=4))
+    else:
+        click.echo('No results')
+
+
+catalogue.add_command(search)

@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd     http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd      http://www.isotc211.org/2005/gmx     http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd">
+          <!--. paragraph15.2 =15.1-->
+          <gmd:fileIdentifier>
+            <gco:CharacterString>urn:x-wmo:md:fr.meteo.dcpc-copernicus::chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF</gco:CharacterString>
+          </gmd:fileIdentifier>
+          <!--. end paragraph15.2  =15.1-->
+          <!--.paragraph18 -->
+          <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng">eng</gmd:LanguageCode>
+          </gmd:language>
+          <!--. end paragraph18 -->
+          <gmd:characterSet>
+            <gmd:MD_CharacterSetCode codeList="MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+          </gmd:characterSet>
+          <!--. paragraph3 -->
+          <gmd:hierarchyLevel>
+            <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists#MD_ScopeCode" codeListValue="series">series</gmd:MD_ScopeCode>
+          </gmd:hierarchyLevel>
+          <!--. end paragraph3 -->
+          <!--. paragraph16.1.1 -->
+          <gmd:contact>
+            <gmd:CI_ResponsibleParty>
+              <gmd:individualName />
+              <!--. end paragraph16.1.1 -->
+              <!--. paragraph16.1.2 -->
+              <gmd:organisationName>
+                <gco:CharacterString>Météo-France</gco:CharacterString>
+              </gmd:organisationName>
+              <!--. end paragraph16.1.2 -->
+              <!--. paragraph16.1.3 -->
+              <gmd:contactInfo>
+                <gmd:CI_Contact>
+                  <gmd:phone />
+                  <gmd:address>
+                    <gmd:CI_Address>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>73 avenue de Paris</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:city>
+                        <gco:CharacterString>SAINT-MANDE</gco:CharacterString>
+                      </gmd:city>
+                      <gmd:postalCode>
+                        <gco:CharacterString>94165</gco:CharacterString>
+                      </gmd:postalCode>
+                      <gmd:country>
+                        <gco:CharacterString>France</gco:CharacterString>
+                      </gmd:country>
+                      <gmd:electronicMailAddress>
+                        <gco:CharacterString>cams50_support@meteo.fr</gco:CharacterString>
+                      </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                  </gmd:address>
+                  <gmd:onlineResource>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/srv/en/help.home</gmd:URL>
+                      </gmd:linkage>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onlineResource>
+                </gmd:CI_Contact>
+              </gmd:contactInfo>
+              <!--. end paragraph16.1.3 -->
+              <!--. paragraph16.2 -->
+              <gmd:role>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</gmd:CI_RoleCode>
+              </gmd:role>
+            </gmd:CI_ResponsibleParty>
+          </gmd:contact>
+          <!--. end paragraph16.2 -->
+          <!--. paragraph17 -->
+          <gmd:dateStamp>
+            <gco:DateTime>2018-03-13T09:49:26Z</gco:DateTime>
+          </gmd:dateStamp>
+          <!--. end paragraph17 -->
+          <!--. paragraph19.1 -->
+          <gmd:metadataStandardName>
+            <gco:CharacterString>WMO Core Metadata Profile of ISO 19115 (WMO Core), 2003/cor.1 :2006 (ISO 19115), 2007 (ISO/TS 19139)</gco:CharacterString>
+          </gmd:metadataStandardName>
+          <!--. end paragraph19.1 -->
+          <!--. paragraph19.2 -->
+          <gmd:metadataStandardVersion>
+            <gco:CharacterString>1.3</gco:CharacterString>
+          </gmd:metadataStandardVersion>
+          <!--. end paragraph19.2 -->
+          <gmd:locale />
+          <!--. paragraph9.2 -->
+          <gmd:referenceSystemInfo>
+            <gmd:MD_ReferenceSystem>
+              <gmd:referenceSystemIdentifier>
+                <gmd:RS_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString>EPSG:4326</gco:CharacterString>
+                  </gmd:code>
+                </gmd:RS_Identifier>
+              </gmd:referenceSystemIdentifier>
+            </gmd:MD_ReferenceSystem>
+          </gmd:referenceSystemInfo>
+          <!--. end paragraph9.2 -->
+          <gmd:identificationInfo>
+            <gmd:MD_DataIdentification>
+              <gmd:citation>
+                <gmd:CI_Citation>
+                  <!--. MLparagraph1 -->
+                  <gmd:title>
+                    <gco:CharacterString>Chimere model hourly forecasts of SO2 concentration from validity time D+3 00 UTC to validity time D+4 00 UTC in Europe,from surface up to 5000m. Format NetCDF.</gco:CharacterString>
+                  </gmd:title>
+                  <!--. end paragraph1 -->
+                  <!--. paragraph10.2.1 and 10.2.2/5.2,5.3,5.4 -->
+                  <gmd:date />
+                  <!--. end paragraph10.2.2 -->
+                  <!--.paragraph5 -->
+                  <gmd:identifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/srv/en/iso19139.xml?uuid=urn:x-wmo:md:fr.meteo.dcpc-copernicus::chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF</gco:CharacterString>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:identifier>
+                  <!--. end paragraph5 -->
+                  <gmd:citedResponsibleParty>
+                    <gmd:CI_ResponsibleParty>
+                      <gmd:organisationName>
+                        <gco:CharacterString>ECMWF</gco:CharacterString>
+                      </gmd:organisationName>
+                      <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+                      </gmd:role>
+                    </gmd:CI_ResponsibleParty>
+                  </gmd:citedResponsibleParty>
+                  <gmd:presentationForm>
+                    <gmd:CI_PresentationFormCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_PresentationFormCode" codeListValue="modelHardcopy">modelHardcopy</gmd:CI_PresentationFormCode>
+                  </gmd:presentationForm>
+                </gmd:CI_Citation>
+              </gmd:citation>
+              <!--. MLparagraph2 -->
+              <gmd:abstract>
+                <gco:CharacterString>Chimere model forecasts of air quality and of the atmospheric composition in Europe. Parameter : concentration of SO2 (sulfur dioxide) at surface, 50m, 250m, 500m, 1000m, 2000m, 3000m and 5000m levels. Unit : μg/m3. forecasts from step +73H to step +96H, i.e from validity time D+3 00 UTC to validity time D+4 00 UTC (D 00 UTC reference time), with a time step of 1 hour. D is the reference time day. Spatial resolution on a regular latitude x longitude grid of 0.1x0.1 degree. NetCDF format. More information can be found in the technical guide available on the CAMS regional website in the documentation category.</gco:CharacterString>
+              </gmd:abstract>
+              <!--. end paragraph2 -->
+              <!--. paragraph14.1.1 -->
+              <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty>
+                  <gmd:individualName />
+                  <gmd:organisationName>
+                    <gco:CharacterString>ECMWF</gco:CharacterString>
+                  </gmd:organisationName>
+                  <!--. end paragraph14.1.1 -->
+                  <!--. paragraph14.1.2 -->
+                  <gmd:contactInfo>
+                    <gmd:CI_Contact>
+                      <gmd:phone />
+                      <gmd:address>
+                        <gmd:CI_Address>
+                          <gmd:deliveryPoint>
+                            <gco:CharacterString>Shinfield Park</gco:CharacterString>
+                          </gmd:deliveryPoint>
+                          <gmd:city>
+                            <gco:CharacterString>Reading, Berkshire</gco:CharacterString>
+                          </gmd:city>
+                          <gmd:postalCode>
+                            <gco:CharacterString>RG2 9AX</gco:CharacterString>
+                          </gmd:postalCode>
+                          <gmd:country>
+                            <gco:CharacterString>United Kingdom</gco:CharacterString>
+                          </gmd:country>
+                          <gmd:electronicMailAddress>
+                            <gco:CharacterString>copernicus-support@ecmwf.int</gco:CharacterString>
+                          </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                      </gmd:address>
+                      <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                          <gmd:linkage>
+                            <gmd:URL>http://atmosphere.copernicus.eu/user-support-0</gmd:URL>
+                          </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                      </gmd:onlineResource>
+                    </gmd:CI_Contact>
+                  </gmd:contactInfo>
+                  <!--. end paragraph14.1.2 -->
+                  <!--. paragraph14.2 -->
+                  <gmd:role>
+                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+                  </gmd:role>
+                </gmd:CI_ResponsibleParty>
+              </gmd:pointOfContact>
+              <gmd:resourceMaintenance>
+                <gmd:MD_MaintenanceInformation>
+                  <gmd:maintenanceAndUpdateFrequency>
+                    <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="daily">daily</gmd:MD_MaintenanceFrequencyCode>
+                  </gmd:maintenanceAndUpdateFrequency>
+                  <gmd:userDefinedMaintenanceFrequency>
+                    <gts:TM_PeriodDuration>P1D</gts:TM_PeriodDuration>
+                  </gmd:userDefinedMaintenanceFrequency>
+                </gmd:MD_MaintenanceInformation>
+              </gmd:resourceMaintenance>
+              <!--. end paragraph14.2 -->
+              <!--. paragraphe9.1 1/INSPIRE THEME -->
+              <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                  <gmd:keyword>
+                    <gco:CharacterString>Atmospheric conditions</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword />
+                  <gmd:thesaurusName>
+                    <gmd:CI_Citation>
+                      <gmd:title>
+                        <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                      </gmd:title>
+                      <gmd:date>
+                        <gmd:CI_Date>
+                          <gmd:date>
+                            <gco:Date>2008-06-01</gco:Date>
+                          </gmd:date>
+                          <gmd:dateType>
+                            <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_TopicCategoryCode" codeListValue="Publication">Publication</gmd:CI_DateTypeCode>
+                          </gmd:dateType>
+                        </gmd:CI_Date>
+                      </gmd:date>
+                    </gmd:CI_Citation>
+                  </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+              <!--. end paragraph9.1-->
+              <!--. paragraphe2.1 2/CLASSIFICATION THEME -->
+              <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                  <gmd:keyword>
+                    <gco:CharacterString>meteorology</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>pollution</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>airPollution</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>atmosphericComposition</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword />
+                  <gmd:type>
+                    <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+                  </gmd:type>
+                  <gmd:thesaurusName>
+                    <gmd:CI_Citation>
+                      <gmd:title>
+                        <gco:CharacterString>WMO_CategoryCode</gco:CharacterString>
+                      </gmd:title>
+                      <gmd:date>
+                        <gmd:CI_Date>
+                          <gmd:date>
+                            <gco:Date>2016-05-26</gco:Date>
+                          </gmd:date>
+                          <gmd:dateType>
+                            <gmd:CI_DateTypeCode codeList="http://wis.wmo.int/2012/codelists/WMOCodelists.xml#CI_DateTypeCode" codeListValue="Revision">Revision</gmd:CI_DateTypeCode>
+                          </gmd:dateType>
+                        </gmd:CI_Date>
+                      </gmd:date>
+                    </gmd:CI_Citation>
+                  </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+              <!--. end paragraph2.1-->
+              <!--. paragraph6.1 4/DISTRIBUTION POLICY-->
+              <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                  <gmd:keyword>
+                    <gco:CharacterString>OriginatingCentre</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:type>
+                    <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="dataCentre">dataCentre</gmd:MD_KeywordTypeCode>
+                  </gmd:type>
+                  <gmd:thesaurusName>
+                    <gmd:CI_Citation>
+                      <gmd:title>
+                        <gco:CharacterString>WMO_DistributionScopeCode</gco:CharacterString>
+                      </gmd:title>
+                      <gmd:date>
+                        <gmd:CI_Date>
+                          <gmd:date>
+                            <gco:Date>2016-05-26</gco:Date>
+                          </gmd:date>
+                          <gmd:dateType>
+                            <gmd:CI_DateTypeCode codeList="http://wis.wmo.int/2012/codelists/WMOCodelists.xml#CI_DateTypeCode" codeListValue="Revision">Revision</gmd:CI_DateTypeCode>
+                          </gmd:dateType>
+                        </gmd:CI_Date>
+                      </gmd:date>
+                    </gmd:CI_Citation>
+                  </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+              <!--. end paragraph6.1 -->
+              <!--. paragraphe8.1 5/PLACE-->
+              <!--. end paragraph8.1 -->
+              <!--. paragraph8.3 6/TIME-->
+              <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords id="dataParam">
+                  <gmd:keyword>
+                    <gco:CharacterString>00</gco:CharacterString>
+                  </gmd:keyword>
+                </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+              <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                  <gmd:keyword>
+                    <gco:CharacterString>polluting</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>pollution</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>air quality</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>reactive gas</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>particles</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>nitrogen dioxide</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>NetCDF</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>GRIB edition 2</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>GRIB2</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>analysis</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>CAMS</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>gmes-atmosphere</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>Copernicus</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>aerosols</gco:CharacterString>
+                  </gmd:keyword>
+                  <gmd:keyword>
+                    <gco:CharacterString>raq</gco:CharacterString>
+                  </gmd:keyword>
+                </gmd:MD_Keywords>
+              </gmd:descriptiveKeywords>
+              <!--. end paragraph8.3 -->
+              <!--. end paragraph8 -->
+              <!--. MLparagraph6.4 -->
+              <!--. end paragraph6.4 -->
+              <!--. MLparagraph6.5 -->
+              <gmd:resourceConstraints>
+                <gmd:MD_LegalConstraints>
+                  <gmd:useLimitation>
+                    <gco:CharacterString>CAMS Data licence (url : https://www.regional.atmosphere.copernicus.eu/doc/CAMS_data_license_final.pdf)</gco:CharacterString>
+                  </gmd:useLimitation>
+                  <gmd:accessConstraints>
+                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                  </gmd:accessConstraints>
+                  <gmd:useConstraints>
+                    <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</gmd:MD_RestrictionCode>
+                  </gmd:useConstraints>
+                  <gmd:otherConstraints>
+                    <gco:CharacterString>WMOOther</gco:CharacterString>
+                  </gmd:otherConstraints>
+                  <gmd:otherConstraints />
+                  <gmd:otherConstraints>
+                    <gco:CharacterString>No restriction of public access</gco:CharacterString>
+                  </gmd:otherConstraints>
+                  <gmd:otherConstraints>
+                    <gco:CharacterString>CAMS50DataPolicy</gco:CharacterString>
+                  </gmd:otherConstraints>
+                </gmd:MD_LegalConstraints>
+              </gmd:resourceConstraints>
+              <!--. paragraph11.2 -->
+              <!--.end  paragraphe11.2 -->
+              <!--. SPATIAL RESOLUTION-->
+              <gmd:spatialResolution>
+                <gmd:MD_Resolution>
+                  <gmd:distance>
+                    <gco:Distance uom="meter">10000.0</gco:Distance>
+                  </gmd:distance>
+                </gmd:MD_Resolution>
+              </gmd:spatialResolution>
+              <!--.paragraph6 -->
+              <gmd:language />
+              <!--. end paragraphe6 -->
+              <!--.paragraph7 -->
+              <gmd:topicCategory>
+                <gmd:MD_TopicCategoryCode>climatologyMeteorologyAtmosphere</gmd:MD_TopicCategoryCode>
+              </gmd:topicCategory>
+              <!--. end paragraphe7 -->
+              <gmd:environmentDescription>
+                <gco:CharacterString>DCPC-CAMS50</gco:CharacterString>
+              </gmd:environmentDescription>
+              <!--. paragraph9.1 -->
+              <gmd:extent>
+                <gmd:EX_Extent>
+                  <gmd:geographicElement>
+                    <gmd:EX_GeographicBoundingBox>
+                      <gmd:westBoundLongitude>
+                        <gco:Decimal>-24.95</gco:Decimal>
+                      </gmd:westBoundLongitude>
+                      <gmd:eastBoundLongitude>
+                        <gco:Decimal>44.95</gco:Decimal>
+                      </gmd:eastBoundLongitude>
+                      <gmd:southBoundLatitude>
+                        <gco:Decimal>30.05</gco:Decimal>
+                      </gmd:southBoundLatitude>
+                      <gmd:northBoundLatitude>
+                        <gco:Decimal>69.95</gco:Decimal>
+                      </gmd:northBoundLatitude>
+                    </gmd:EX_GeographicBoundingBox>
+                  </gmd:geographicElement>
+                  <!--. end paragraph9.1 -->
+                  <!--. paragraph10.1 -->
+                  <gmd:temporalElement>
+                    <gmd:EX_TemporalExtent>
+                      <gmd:extent>
+                        <gml:TimePeriod gml:id="boundingTemporalExtentPeriod">
+                          <gml:beginPosition indeterminatePosition="after" />
+                          <gml:endPosition indeterminatePosition="after" />
+                          <gml:duration>P1D</gml:duration>
+                        </gml:TimePeriod>
+                      </gmd:extent>
+                    </gmd:EX_TemporalExtent>
+                  </gmd:temporalElement>
+                </gmd:EX_Extent>
+              </gmd:extent>
+              <!--. end paragraph10.1 -->
+            </gmd:MD_DataIdentification>
+          </gmd:identificationInfo>
+          <!--. paragraph4 -->
+          <gmd:distributionInfo>
+            <gmd:MD_Distribution>
+              <gmd:distributionFormat>
+                <gmd:MD_Format>
+                  <gmd:name>
+                    <gco:CharacterString>NetCDF</gco:CharacterString>
+                  </gmd:name>
+                  <gmd:version>
+                    <gco:CharacterString>3</gco:CharacterString>
+                  </gmd:version>
+                  <gmd:specification>
+                    <gco:CharacterString>http://www.unidata.ucar.edu/software/netcdf/</gco:CharacterString>
+                  </gmd:specification>
+                </gmd:MD_Format>
+              </gmd:distributionFormat>
+              <!--.end  paragraph4.3 -->
+              <gmd:distributor>
+                <gmd:MD_Distributor>
+                  <gmd:distributorContact>
+                    <gmd:CI_ResponsibleParty>
+                      <gmd:individualName />
+                      <gmd:organisationName>
+                        <gco:CharacterString>Météo-France</gco:CharacterString>
+                      </gmd:organisationName>
+                      <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                          <gmd:phone />
+                          <gmd:address>
+                            <gmd:CI_Address>
+                              <gmd:deliveryPoint>
+                                <gco:CharacterString>73 avenue de Paris</gco:CharacterString>
+                              </gmd:deliveryPoint>
+                              <gmd:city>
+                                <gco:CharacterString>SAINT-MANDE</gco:CharacterString>
+                              </gmd:city>
+                              <gmd:postalCode>
+                                <gco:CharacterString>94165</gco:CharacterString>
+                              </gmd:postalCode>
+                              <gmd:country>
+                                <gco:CharacterString>France</gco:CharacterString>
+                              </gmd:country>
+                              <gmd:electronicMailAddress>
+                                <gco:CharacterString>cams50_support@meteo.fr</gco:CharacterString>
+                              </gmd:electronicMailAddress>
+                            </gmd:CI_Address>
+                          </gmd:address>
+                          <gmd:onlineResource>
+                            <gmd:CI_OnlineResource>
+                              <gmd:linkage>
+                                <gmd:URL>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/srv/en/help.home</gmd:URL>
+                              </gmd:linkage>
+                            </gmd:CI_OnlineResource>
+                          </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                      </gmd:contactInfo>
+                      <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</gmd:CI_RoleCode>
+                      </gmd:role>
+                    </gmd:CI_ResponsibleParty>
+                  </gmd:distributorContact>
+                </gmd:MD_Distributor>
+              </gmd:distributor>
+              <!--. paragraph4 -->
+              <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>https://data.regional.atmosphere.copernicus.eu/openwis-user-portal/srv/en/iso19139.xml?uuid=urn:x-wmo:md:fr.meteo.dcpc-copernicus::report_production_ensemble_forecast_73H_96H</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>Report of Multi Model Ensemble production</gco:CharacterString>
+                      </gmd:name>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>https://www.regional.atmosphere.copernicus.eu/index.php?category=forecasts&amp;subensemble=individual_forecasts&amp;date=LAST&amp;calculation-model=CHIMERE&amp;species=so2&amp;level=SFC&amp;offset=000</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>Overview in a new tab</gco:CharacterString>
+                      </gmd:name>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/retrieve/subscribe/urn:x-wmo:md:fr.meteo.dcpc-copernicus::chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>Subscribe on DCPC</gco:CharacterString>
+                      </gmd:name>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/retrieve/request/urn:x-wmo:md:fr.meteo.dcpc-copernicus::chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>Request on DCPC</gco:CharacterString>
+                      </gmd:name>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://data.regional.atmosphere.copernicus.eu/openwis-user-portal/srv/en/main.home?urn=urn:x-wmo:md:fr.meteo.dcpc-copernicus::chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>Permanent link</gco:CharacterString>
+                      </gmd:name>
+                      <gmd:description>
+                        <gco:CharacterString>CAMS Data server</gco:CharacterString>
+                      </gmd:description>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://www.regional.atmosphere.copernicus.eu</gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>CAMS Regional Website</gco:CharacterString>
+                      </gmd:name>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+              </gmd:transferOptions>
+            </gmd:MD_Distribution>
+          </gmd:distributionInfo>
+          <!--.end  paragraph4 -->
+          <gmd:dataQualityInfo>
+            <gmd:DQ_DataQuality>
+              <gmd:scope>
+                <gmd:DQ_Scope>
+                  <gmd:level>
+                    <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="series">series</gmd:MD_ScopeCode>
+                  </gmd:level>
+                </gmd:DQ_Scope>
+              </gmd:scope>
+              <gmd:report>
+                <gmd:DQ_DomainConsistency>
+                  <gmd:result>
+                    <gmd:DQ_ConformanceResult>
+                      <gmd:specification>
+                        <gmd:CI_Citation>
+                          <gmd:title>
+                            <gco:CharacterString>INSPIRE Data Specification on Atmospheric Conditions and Meteorological Geographical Features-Draft Technical Guidelines</gco:CharacterString>
+                          </gmd:title>
+                          <gmd:date>
+                            <gmd:CI_Date>
+                              <gmd:date>
+                                <gco:Date>2013-12-10</gco:Date>
+                              </gmd:date>
+                              <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                              </gmd:dateType>
+                            </gmd:CI_Date>
+                          </gmd:date>
+                        </gmd:CI_Citation>
+                      </gmd:specification>
+                      <gmd:explanation>
+                        <gco:CharacterString>See the referenced specification</gco:CharacterString>
+                      </gmd:explanation>
+                      <gmd:pass>
+                        <gco:Boolean>true</gco:Boolean>
+                      </gmd:pass>
+                    </gmd:DQ_ConformanceResult>
+                  </gmd:result>
+                </gmd:DQ_DomainConsistency>
+              </gmd:report>
+              <gmd:lineage>
+                <gmd:LI_Lineage>
+                  <gmd:statement>
+                    <gco:CharacterString>atmosphericComposition</gco:CharacterString>
+                  </gmd:statement>
+                </gmd:LI_Lineage>
+              </gmd:lineage>
+            </gmd:DQ_DataQuality>
+          </gmd:dataQualityInfo>
+          <gmd:describes>
+            <gmx:MX_DataSet>
+              <gmd:has gco:nilReason="inapplicable" />
+              <gmx:dataFile>
+                <gmx:MX_DataFile>
+                  <gmx:fileName>
+                    <gmx:FileName>CHIMERE_FORECAST_ALLLEVELS_SO2_73H_96H_\d{18}\.nc</gmx:FileName>
+                  </gmx:fileName>
+                  <gmx:fileDescription>
+                    <gco:CharacterString>Chimere model hourly forecasts of SO2 concentration from validity time D+3 00 UTC to validity time D+4 00 UTC in Europe,from surface up to 5000m. Format NetCDF.</gco:CharacterString>
+                  </gmx:fileDescription>
+                  <gmx:fileType>
+                    <gmx:MimeFileType type="text/plain">text/plain</gmx:MimeFileType>
+                  </gmx:fileType>
+                  <gmx:fileFormat>
+                    <gmd:MD_Format>
+                      <gmd:name>
+                        <gco:CharacterString>NetCDF</gco:CharacterString>
+                      </gmd:name>
+                      <gmd:version>
+                        <gco:CharacterString>3</gco:CharacterString>
+                      </gmd:version>
+                    </gmd:MD_Format>
+                  </gmx:fileFormat>
+                </gmx:MX_DataFile>
+              </gmx:dataFile>
+            </gmx:MX_DataSet>
+          </gmd:describes>
+        </gmd:MD_Metadata>
