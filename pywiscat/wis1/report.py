@@ -1,8 +1,10 @@
 # =================================================================
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
+#          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2021 Tom Kralidis
+# Copyright (c) 2021 IBL Software Engineering spol. s r. o.
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -29,12 +31,11 @@
 
 import json
 import logging
-import os
-from lxml import etree
 
 import click
 
-from pywiscat.cli_helpers import cli_callbacks, cli_option_directory
+from pywiscat.cli_helpers import cli_callbacks
+from pywiscat.wis1.util import (search_files_by_term, group_by_originator)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -43,16 +44,6 @@ LOGGER = logging.getLogger(__name__)
 def report():
     """Reporting functions"""
     pass
-
-
-NAMESPACES = {
-    'gco': 'http://www.isotc211.org/2005/gco',
-    'gmd': 'http://www.isotc211.org/2005/gmd',
-    'gml': 'http://www.opengis.net/gml/3.2',
-    'gmx': 'http://www.isotc211.org/2005/gmx',
-    'gts': 'http://www.isotc211.org/2005/gts',
-    'xlink': 'http://www.w3.org/1999/xlink'
-}
 
 
 def group_search_results_by_organization(directory: str, terms: list) -> dict:
@@ -66,53 +57,40 @@ def group_search_results_by_organization(directory: str, terms: list) -> dict:
     :returns: dict of results grouped by organization
     """
 
-    matches = []
-    matches_by_org = {}
-
-    LOGGER.debug(f'Walking directory {directory}')
-    for root, _, files in os.walk(directory):
-        for name in files:
-            filename = f'{root}/{name}'
-            LOGGER.debug(f'filename: {filename}')
-
-            if not filename.endswith('.xml'):
-                continue
-
-            e = etree.parse(filename)
-            anytext = ' '.join(
-                [value.strip() for value in e.xpath('//text()')])
-
-            if all(term.lower() in anytext.lower() for term in terms):
-                LOGGER.debug('Found match, extracting organization')
-                matches.append(filename)
-                try:
-                    for contact in e.xpath('//gmd:CI_ResponsibleParty', namespaces=NAMESPACES):  # noqa
-                        if contact.xpath("//gmd:CI_RoleCode[@codeListValue='pointOfContact']", namespaces=NAMESPACES):  # noqa
-                            org_name = contact.xpath('//gmd:organisationName/gco:CharacterString/text()', namespaces=NAMESPACES)  # noqa
-                            if org_name:
-                                if org_name[0] in matches_by_org:
-                                    LOGGER.debug('Adding to existing key')
-                                    matches_by_org[org_name[0]] += 1
-                                else:
-                                    LOGGER.debug('Adding to new key')
-                                    matches_by_org[org_name[0]] = 1
-                except Exception as err:
-                    LOGGER.error(f'Error analyzing {filename}: {err}')
-
-    LOGGER.debug(f'Matching records ({len(matches)}: {matches}')
+    matches = search_files_by_term(directory, terms)
+    matches_by_org = group_by_originator(matches)
     return matches_by_org
 
 
 @click.command()
 @click.pass_context
 @cli_callbacks
-@cli_option_directory
+@click.option('--directory', '-d', required=False,
+              help='Directory with metadata files to process',
+              type=click.Path(resolve_path=True, file_okay=False))
 @click.option('--term', '-t', 'terms', multiple=True, required=True)
-def terms_by_org(ctx, terms, directory, verbosity):
+@click.option('--file-list', '-f', 'file_list_file',
+              type=click.Path(exists=True, resolve_path=True), required=False,
+              help='File containing JSON list with metadata files to process, alternative to "-d"')
+def terms_by_org(ctx, terms, directory, file_list_file, verbosity):
     """Analyze term searches by organization"""
 
-    click.echo(f'Analyzing records in {directory} for terms {terms}')
-    results = group_search_results_by_organization(directory, terms)
+    if file_list_file is None and directory is None:
+        raise click.UsageError('Missing --file-list or --directory option')
+
+    results = {}
+    if not file_list_file:
+        click.echo(f'Analyzing records in {directory} for terms {terms}')
+        results = group_search_results_by_organization(directory, terms)
+    else:
+        file_list = []
+        with open(file_list_file, "r", encoding="utf-8") as file_list_json:
+            try:
+                file_list = json.load(file_list_json)
+            except Exception as err:
+                LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
+                return
+            results = group_by_originator(file_list)
 
     if results:
         click.echo(json.dumps(results, indent=4))
