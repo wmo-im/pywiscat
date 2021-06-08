@@ -1,6 +1,7 @@
 # =================================================================
 #
-# Authors: Tom Kralidis <tomkralidis@gmail.com>, Ján Osuský
+# Authors: Tom Kralidis <tomkralidis@gmail.com>
+#          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2021 Tom Kralidis
 # Copyright (c) 2021 IBL Software Engineering spol. s r. o.
@@ -83,13 +84,13 @@ def terms_by_org(ctx, terms, directory, file_list_file, verbosity):
         results = group_search_results_by_organization(directory, terms)
     else:
         file_list = []
-        file_list_json = open(file_list_file, "r", encoding="utf-8")
-        try:
-            file_list = json.load(file_list_json)
-        except Exception as err:
-            LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
-            return
-        results = group_by_originator(file_list)
+        with open(file_list_file, "r", encoding="utf-8") as file_list_json:
+            try:
+                file_list = json.load(file_list_json)
+            except Exception as err:
+                LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
+                return
+            results = group_by_originator(file_list)
 
     if results:
         click.echo(json.dumps(results, indent=4))

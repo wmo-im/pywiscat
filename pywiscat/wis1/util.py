@@ -1,6 +1,7 @@
 # =================================================================
 #
-# Authors: Tom Kralidis <tomkralidis@gmail.com>, Ján Osuský
+# Authors: Tom Kralidis <tomkralidis@gmail.com>
+#          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2021 Government of Canada
 # Copyright (c) 2021 IBL Software Engineering spol. s r. o.
