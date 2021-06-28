@@ -68,7 +68,8 @@ def group_search_results_by_organization(directory: str, terms: list, group_by_a
 @click.option('--directory', '-d', required=False,
               help='Directory with metadata files to process',
               type=click.Path(resolve_path=True, file_okay=False))
-@click.option('--term', '-t', 'terms', multiple=True, required=True)
+@click.option('--term', '-t', 'terms', multiple=True, required=True,
+              help='Terms (sub-strings) to be searched in the metadata, case insensitive')
 @click.option('--file-list', '-f', 'file_list_file',
               type=click.Path(exists=True, resolve_path=True), required=False,
               help='File containing JSON list with metadata files to process, alternative to "-d"')

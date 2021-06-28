@@ -91,6 +91,8 @@ def identifier(exml):
     """
     Helper function to derive a metadata record identifier
 
+    :param exml: `etree.ElementTree` object
+
     :returns: metadata record identifier
     """
 
@@ -102,6 +104,8 @@ def identifier(exml):
 def citation_authority(file_identifier: str):
     """
     Helper function to extract citation authority (kind of originator center reverse DNS) from file identifier
+
+    :param file_identifier: Identifier of the file (metadata document) to extract the authority from.
 
     :returns: citation authority, or empty string if the extraction failed
     """
@@ -119,6 +123,7 @@ def group_by_originator(file_list: list, group_by_authority: bool) -> dict:
     and optionally also by citation authority from the file identifier.
 
     :param file_list: list of MD XML files
+    :param group_by_authority: whether to group the list by (citation) authority or not
 
     :returns: dict of results grouped by metadata originator
     """
