@@ -47,6 +47,7 @@ def report():
 
 
 def group_search_results_by_organization(directory: str, terms: list, group_by_authority: bool) -> dict:
+
     """
     Searches directory tree of metadata for matching search terms and
     and groups by organization
@@ -59,6 +60,7 @@ def group_search_results_by_organization(directory: str, terms: list, group_by_a
 
     matches = search_files_by_term(directory, terms)
     matches_by_org = group_by_originator(matches, group_by_authority)
+
     return matches_by_org
 
 
@@ -76,8 +78,7 @@ def group_search_results_by_organization(directory: str, terms: list, group_by_a
 @click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
               help='Group organizations by citation authority in the file identifier')
 def terms_by_org(ctx, terms, directory, file_list_file, group_by_authority, verbosity):
-    """Analyze term searches by organization
-    """
+    """Analyze term searches by organization"""
 
     if file_list_file is None and directory is None:
         raise click.UsageError('Missing --file-list or --directory option')

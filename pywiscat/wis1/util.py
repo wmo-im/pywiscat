@@ -147,6 +147,7 @@ def group_by_originator(file_list: list, group_by_authority: bool) -> dict:
             code_list_value_xpath = "gmd:role/gmd:CI_RoleCode[@codeListValue='pointOfContact']"
             found = False
             for contact in exml.xpath(element_xpath, namespaces=NAMESPACES):
+
                 point_of_contact = contact.xpath(code_list_value_xpath, namespaces=NAMESPACES)
                 if point_of_contact:
                     org_name = contact.xpath('gmd:organisationName/gco:CharacterString/text()', namespaces=NAMESPACES)  # noqa
