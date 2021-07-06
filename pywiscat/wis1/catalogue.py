@@ -90,7 +90,8 @@ catalogue.add_command(cache)
 @click.pass_context
 @cli_callbacks
 @cli_option_directory
-@click.option('--term', '-t', 'terms', multiple=True, required=True)
+@click.option('--term', '-t', 'terms', multiple=True, required=True,
+              help='Terms (sub-strings) to be searched in the metadata, case insensitive')
 def search(ctx, terms, directory, verbosity):
     """Searches terms in the catalog (local directory with MD XML)"""
 

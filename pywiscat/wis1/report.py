@@ -46,7 +46,8 @@ def report():
     pass
 
 
-def group_search_results_by_organization(directory: str, terms: list) -> dict:
+def group_search_results_by_organization(directory: str, terms: list, group_by_authority: bool) -> dict:
+
     """
     Searches directory tree of metadata for matching search terms and
     and groups by organization
@@ -58,7 +59,8 @@ def group_search_results_by_organization(directory: str, terms: list) -> dict:
     """
 
     matches = search_files_by_term(directory, terms)
-    matches_by_org = group_by_originator(matches)
+    matches_by_org = group_by_originator(matches, group_by_authority)
+
     return matches_by_org
 
 
@@ -68,11 +70,14 @@ def group_search_results_by_organization(directory: str, terms: list) -> dict:
 @click.option('--directory', '-d', required=False,
               help='Directory with metadata files to process',
               type=click.Path(resolve_path=True, file_okay=False))
-@click.option('--term', '-t', 'terms', multiple=True, required=True)
+@click.option('--term', '-t', 'terms', multiple=True, required=True,
+              help='Terms (sub-strings) to be searched in the metadata, case insensitive')
 @click.option('--file-list', '-f', 'file_list_file',
               type=click.Path(exists=True, resolve_path=True), required=False,
               help='File containing JSON list with metadata files to process, alternative to "-d"')
-def terms_by_org(ctx, terms, directory, file_list_file, verbosity):
+@click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
+              help='Group organizations by citation authority in the file identifier')
+def terms_by_org(ctx, terms, directory, file_list_file, group_by_authority, verbosity):
     """Analyze term searches by organization"""
 
     if file_list_file is None and directory is None:
@@ -81,7 +86,7 @@ def terms_by_org(ctx, terms, directory, file_list_file, verbosity):
     results = {}
     if not file_list_file:
         click.echo(f'Analyzing records in {directory} for terms {terms}')
-        results = group_search_results_by_organization(directory, terms)
+        results = group_search_results_by_organization(directory, terms, group_by_authority)
     else:
         file_list = []
         with open(file_list_file, "r", encoding="utf-8") as file_list_json:
@@ -90,7 +95,7 @@ def terms_by_org(ctx, terms, directory, file_list_file, verbosity):
             except Exception as err:
                 LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
                 return
-            results = group_by_originator(file_list)
+            results = group_by_originator(file_list, group_by_authority)
 
     if results:
         click.echo(json.dumps(results, indent=4))
