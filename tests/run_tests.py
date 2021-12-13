@@ -51,14 +51,14 @@ class WISCatalogueUtilTest(unittest.TestCase):
 
         with open('tests/data/small_list.json', 'r', encoding='utf-8') as file_list_json:
             file_list = json.load(file_list_json)
-            results = group_by_originator(file_list)
+            results = group_by_originator(file_list, False)
             self.assertEqual(results['ECMWF'], 2)
 
     def test_term_by_originator(self):
         """Simple Tests of grouping for a term"""
 
-        results = group_search_results_by_organization('tests/data/', 'grib')
-        self.assertEqual(results['ECMWF'], 4)
+        results = group_search_results_by_organization('tests/data/', 'grib', False)
+        self.assertEqual(results['ECMWF'], 2)
 
 
 if __name__ == '__main__':

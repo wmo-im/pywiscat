@@ -112,7 +112,9 @@ def terms_by_org(ctx, terms, directory, file_list_file, group_by_authority, verb
 @click.option('--file-list', '-f', 'file_list_file',
               type=click.Path(exists=True, resolve_path=True), required=False,
               help='File containing JSON list with metadata files to process, alternative to "-d"')
-def records_by_org(ctx, directory, file_list_file, verbosity):
+@click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
+              help='Group organizations by citation authority in the file identifier')
+def records_by_org(ctx, directory, file_list_file, group_by_authority, verbosity):
     """Report number of records by organization / originator"""
 
     if file_list_file is None and directory is None:
@@ -122,7 +124,7 @@ def records_by_org(ctx, directory, file_list_file, verbosity):
     if not file_list_file:
         click.echo(f'Analyzing records in {directory}')
         file_list = create_file_list(directory)
-        results = group_by_originator(file_list)
+        results = group_by_originator(file_list, group_by_authority)
     else:
         file_list = []
         with open(file_list_file, "r", encoding="utf-8") as file_list_json:
@@ -131,7 +133,7 @@ def records_by_org(ctx, directory, file_list_file, verbosity):
             except Exception as err:
                 LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
                 return
-            results = group_by_originator(file_list)
+            results = group_by_originator(file_list, group_by_authority)
 
     if results:
         click.echo(json.dumps(results, indent=4))
