@@ -31,8 +31,12 @@
 
 import json
 import logging
+import os
 
 import click
+
+from pywcmp.kpi import (WMOCoreMetadataProfileKeyPerformanceIndicators)
+from pywcmp.util import (parse_wcmp)
 
 from pywiscat.cli_helpers import cli_callbacks
 from pywiscat.wis1.util import (create_file_list, search_files_by_term, group_by_originator)
@@ -141,5 +145,83 @@ def records_by_org(ctx, directory, file_list_file, group_by_authority, verbosity
         click.echo('No results')
 
 
+@click.command()
+@click.pass_context
+@cli_callbacks
+@click.option('--directory', '-d', required=False,
+              help='Directory with metadata files to process',
+              type=click.Path(resolve_path=True, file_okay=False))
+@click.option('--file-list', '-f', 'file_list_file',
+              type=click.Path(exists=True, resolve_path=True), required=False,
+              help='File containing JSON list with metadata files to process, alternative to "-d"')
+@click.option('--kpi', '-k', default=0, help='KPI to run, default is all')
+@click.option('--summary', '-s', is_flag=True, default=False,
+              help='Output only summary section of KPI test results for each file')
+@click.option('--brief-summary', '-S', 'brief_summary', is_flag=True, default=False,
+              help='Output extra brief summary of KPI test results for each file')
+@click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
+              help='Group results by citation authority in the file identifier')
+def kpi(ctx, directory, file_list_file, group_by_authority, kpi, summary, brief_summary, verbosity):
+    """Runs pywcmp kpi tool on a each of the metadata files in a directory or list"""
+
+    if file_list_file is None and directory is None:
+        raise click.UsageError('Missing --file-list or --directory option')
+
+    results = {}
+    file_list = []
+    if not file_list_file:
+        click.echo(f'Analyzing records in {directory}')
+        file_list = create_file_list(directory)
+    else:
+        with open(file_list_file, "r", encoding="utf-8") as file_list_json:
+            try:
+                file_list = json.load(file_list_json)
+            except Exception as err:
+                LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
+                return
+
+    for file_path in file_list:
+        parent_path, filename = os.path.split(file_path)
+        LOGGER.debug(f'Analyzing: {filename}')
+
+        try:
+            exml = parse_wcmp(file_path)
+        except Exception as err:
+            raise click.ClickException(err)
+
+        kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(exml)
+
+        try:
+            kpis_results = kpis.evaluate(kpi)
+        except ValueError as err:
+            raise click.UsageError(f'Invalid KPI {kpi}: {err}')
+
+        if kpi == 0:
+            LOGGER.info(f'{kpis.identifier}: {kpis_results["summary"]["percentage"]}% {kpis_results["summary"]["grade"]}')
+        else:
+            selected_kpi = f'kpi_{kpi:03}'
+            LOGGER.info(f'{kpis.identifier}: {kpis_results[selected_kpi]["percentage"]}%')
+
+        if kpi == 0 and brief_summary:
+            results[file_path] = {
+                'percentage': kpis_results['summary']['percentage'],
+                'grade': kpis_results['summary']['grade'],
+                'identifier': kpis.identifier
+            }
+        elif kpi == 0 and summary:
+            results[file_path] = kpis_results['summary']
+        elif brief_summary:
+            selected_kpi = f'kpi_{kpi:03}'
+            results[file_path] = {
+                'percentage': kpis_results[selected_kpi]['percentage'],
+                'identifier': kpis.identifier
+            }
+        else:
+            results[file_path] = kpis_results
+
+    click.echo(json.dumps(results, indent=4))
+
+
 report.add_command(terms_by_org)
 report.add_command(records_by_org)
+report.add_command(kpi)

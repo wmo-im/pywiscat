@@ -47,7 +47,7 @@ class WISCatalogueUtilTest(unittest.TestCase):
         pass
 
     def test_group_by_originator(self):
-        """Simple Tests of grouping"""
+        """Simple test of grouping records by originator"""
 
         with open('tests/data/small_list.json', 'r', encoding='utf-8') as file_list_json:
             file_list = json.load(file_list_json)
@@ -55,10 +55,16 @@ class WISCatalogueUtilTest(unittest.TestCase):
             self.assertEqual(results['ECMWF'], 2)
 
     def test_term_by_originator(self):
-        """Simple Tests of grouping for a term"""
+        """Simple test of search for a term with grouping"""
 
         results = group_search_results_by_organization('tests/data/', 'grib', False)
         self.assertEqual(results['ECMWF'], 2)
+
+#    def test_kpi(self):
+#        """Simple test running KPI (pywcmp) on multiple files"""
+#
+#        results = group_search_results_by_organization('tests/data/', 'grib', False)
+#        self.assertEqual(results['ECMWF'], 2)
 
 
 if __name__ == '__main__':
