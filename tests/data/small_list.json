@@ -1,0 +1,5 @@
+[
+    "tests/data/de.dkrz.wdcc.iso2000013.xml",
+    "tests/data/urn_x-wmo_md_int.ecmwf__HRXG00ECMF.xml",
+    "tests/data/urn_x-wmo_md_fr.meteo.dcpc-copernicus__chimere_europe_0.1deg_forecast_alllevels_SO2_73H_96H_1h_NetCDF.xml"
+]

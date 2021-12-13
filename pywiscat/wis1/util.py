@@ -46,6 +46,30 @@ NAMESPACES = {
 }
 
 
+def create_file_list(directory: str) -> list:
+    """
+    Searches directory tree of metadata for *.xml files
+
+    :param directory: directory to metadata files
+
+    :returns: list of file names
+    """
+
+    file_list = []
+
+    LOGGER.debug(f'Walking directory {directory}')
+    for root, _, files in os.walk(directory):
+        for name in files:
+            filename = f'{root}/{name}'
+
+            if not filename.endswith('.xml'):
+                continue
+
+            file_list.append(filename)
+
+    return file_list
+
+
 def search_files_by_term(directory: str, terms: list) -> list:
     """
     Searches directory tree of metadata for files containing search terms
@@ -58,30 +82,28 @@ def search_files_by_term(directory: str, terms: list) -> list:
 
     matches = []
 
-    LOGGER.debug(f'Walking directory {directory}')
     match_count = 0
     file_count = 0
-    for root, _, files in os.walk(directory):
-        for name in files:
-            filename = f'{root}/{name}'
-            LOGGER.debug(filename)
+    file_list = create_file_list(directory)
+    for filename in file_list:
+        LOGGER.debug(filename)
 
-            file_count += 1
-            processed = math.floor(file_count * 100 / len(files))
+        file_count += 1
+        processed = math.floor(file_count * 100 / len(file_list))
 
-            if not filename.endswith('.xml'):
-                continue
+        if not filename.endswith('.xml'):
+            continue
 
-            e = etree.parse(filename)
-            anytext = ' '.join(
-                [value.strip() for value in e.xpath('//text()')])
+        e = etree.parse(filename)
+        anytext = ' '.join(
+            [value.strip() for value in e.xpath('//text()')])
 
-            if all(term.lower() in anytext.lower() for term in terms):
-                match_count += 1
-                LOGGER.debug(f'Found match #{match_count}, searched {processed}%')
-                matches.append(filename)
-            else:
-                LOGGER.debug(f'No match found, searched {processed}%')
+        if all(term.lower() in anytext.lower() for term in terms):
+            match_count += 1
+            LOGGER.debug(f'Found match #{match_count}, searched {processed}%')
+            matches.append(filename)
+        else:
+            LOGGER.debug(f'No match found, searched {processed}%')
 
     LOGGER.debug(f'Found {len(matches)} matching metadata records.')
     return matches

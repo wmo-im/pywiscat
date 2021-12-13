@@ -35,7 +35,7 @@ import logging
 import click
 
 from pywiscat.cli_helpers import cli_callbacks
-from pywiscat.wis1.util import (search_files_by_term, group_by_originator)
+from pywiscat.wis1.util import (create_file_list, search_files_by_term, group_by_originator)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -103,4 +103,41 @@ def terms_by_org(ctx, terms, directory, file_list_file, group_by_authority, verb
         click.echo('No results')
 
 
+@click.command()
+@click.pass_context
+@cli_callbacks
+@click.option('--directory', '-d', required=False,
+              help='Directory with metadata files to process',
+              type=click.Path(resolve_path=True, file_okay=False))
+@click.option('--file-list', '-f', 'file_list_file',
+              type=click.Path(exists=True, resolve_path=True), required=False,
+              help='File containing JSON list with metadata files to process, alternative to "-d"')
+def records_by_org(ctx, directory, file_list_file, verbosity):
+    """Report number of records by organization / originator"""
+
+    if file_list_file is None and directory is None:
+        raise click.UsageError('Missing --file-list or --directory option')
+
+    results = {}
+    if not file_list_file:
+        click.echo(f'Analyzing records in {directory}')
+        file_list = create_file_list(directory)
+        results = group_by_originator(file_list)
+    else:
+        file_list = []
+        with open(file_list_file, "r", encoding="utf-8") as file_list_json:
+            try:
+                file_list = json.load(file_list_json)
+            except Exception as err:
+                LOGGER.error(f'Failed to read file list {file_list_file}: {err}')
+                return
+            results = group_by_originator(file_list)
+
+    if results:
+        click.echo(json.dumps(results, indent=4))
+    else:
+        click.echo('No results')
+
+
 report.add_command(terms_by_org)
+report.add_command(records_by_org)
