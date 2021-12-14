@@ -60,11 +60,11 @@ class WISCatalogueUtilTest(unittest.TestCase):
         results = group_search_results_by_organization('tests/data/', 'grib', False)
         self.assertEqual(results['ECMWF'], 2)
 
-#    def test_kpi(self):
-#        """Simple test running KPI (pywcmp) on multiple files"""
-#
-#        results = group_search_results_by_organization('tests/data/', 'grib', False)
-#        self.assertEqual(results['ECMWF'], 2)
+    def test_kpi(self):
+        """Simple test running KPI (pywcmp) on multiple files"""
+
+        results = group_search_results_by_organization('tests/data/', 'grib', False)
+        self.assertEqual(results['ECMWF'], 2)
 
 
 if __name__ == '__main__':
