@@ -1,4 +1,4 @@
 click
 lxml
-requests
 pywcmp
+requests

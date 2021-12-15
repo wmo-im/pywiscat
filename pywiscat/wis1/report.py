@@ -35,8 +35,8 @@ import os
 
 import click
 
-from pywcmp.kpi import (WMOCoreMetadataProfileKeyPerformanceIndicators)
-from pywcmp.util import (parse_wcmp)
+from pywcmp.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
+from pywcmp.util import parse_wcmp
 
 from pywiscat.cli_helpers import cli_callbacks
 from pywiscat.wis1.util import (create_file_list, search_files_by_term, group_by_originator)
@@ -145,7 +145,7 @@ def records_by_org(ctx, directory, file_list_file, group_by_authority, verbosity
         click.echo('No results')
 
 
-@click.command()
+@click.command(short_help='KPI assessment of metadata files')
 @click.pass_context
 @cli_callbacks
 @click.option('--directory', '-d', required=False,
@@ -162,7 +162,7 @@ def records_by_org(ctx, directory, file_list_file, group_by_authority, verbosity
 @click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
               help='Group results by citation authority in the file identifier')
 def kpi(ctx, directory, file_list_file, group_by_authority, kpi, summary, brief_summary, verbosity):
-    """Runs pywcmp kpi tool on a each of the metadata files in a directory or list"""
+    """Runs kpi assessment on all metadata files in a directory or list"""
 
     if file_list_file is None and directory is None:
         raise click.UsageError('Missing --file-list or --directory option')
