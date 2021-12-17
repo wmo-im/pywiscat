@@ -155,13 +155,12 @@ def records_by_org(ctx, directory, file_list_file, group_by_authority, verbosity
               type=click.Path(exists=True, resolve_path=True), required=False,
               help='File containing JSON list with metadata files to process, alternative to "-d"')
 @click.option('--kpi', '-k', default=0, help='KPI to run, default is all')
-@click.option('--summary', '-s', is_flag=True, default=False,
-              help='Output only summary section of KPI test results for each file')
-@click.option('--brief-summary', '-S', 'brief_summary', is_flag=True, default=False,
-              help='Output extra brief summary of KPI test results for each file')
+@click.option('--output-format', '-o', 'output_format', default='brief',
+              type=click.Choice(['brief', 'summary', 'full'], case_sensitive=False),
+              help='Output format of the KPI results')
 @click.option('--group', '-g', 'group_by_authority', is_flag=True, default=False,
               help='Group results by citation authority in the file identifier')
-def kpi(ctx, directory, file_list_file, group_by_authority, kpi, summary, brief_summary, verbosity):
+def kpi(ctx, directory, file_list_file, group_by_authority, kpi, output_format, verbosity):
     """Runs kpi assessment on all metadata files in a directory or list"""
 
     if file_list_file is None and directory is None:
@@ -202,15 +201,15 @@ def kpi(ctx, directory, file_list_file, group_by_authority, kpi, summary, brief_
             selected_kpi = f'kpi_{kpi:03}'
             LOGGER.info(f'{kpis.identifier}: {kpis_results[selected_kpi]["percentage"]}%')
 
-        if kpi == 0 and brief_summary:
+        if kpi == 0 and output_format == 'brief':
             results[file_path] = {
                 'percentage': kpis_results['summary']['percentage'],
                 'grade': kpis_results['summary']['grade'],
                 'identifier': kpis.identifier
             }
-        elif kpi == 0 and summary:
+        elif kpi == 0 and output_format == 'summary':
             results[file_path] = kpis_results['summary']
-        elif brief_summary:
+        elif output_format == 'brief':
             selected_kpi = f'kpi_{kpi:03}'
             results[file_path] = {
                 'percentage': kpis_results[selected_kpi]['percentage'],

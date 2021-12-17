@@ -56,6 +56,22 @@ pywiscat wis1 report terms-by-org --directory=/path/to/metadata/files --term nwp
 
 # search for 'nwp' in verbose mode (Python logging levels)
 pywiscat wis1 report terms-by-org --directory=/path/to/metadata/files --term nwp --verbosity DEBUG
+
+# KPI assesment
+
+# run KPI assesment (aka pywcmp) on all metadata files in a directory with default ("brief") output
+pywiscat wis1 report kpi --directory /path/to/metadata/files
+
+# run KPI assesment on selected metadata files printing out the "summary" section for each file
+pywiscat wis1 report kpi --file-list /path/to/metadata/file_list.json --output-format summary
+
+# run assesment of KPI 1 (ATS) on all metadata files in a directory with "full" output
+pywiscat wis1 report kpi -k1 --directory /path/to/metadata/files --output-format full
+
+# other reports
+
+# list number of records per organization
+pywiscat wis1 report records-by-org --directory=/path/to/metadata/files
 ```
 
 ## Using the API
