@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2021 Tom Kralidis
+# Copyright (c) 2023 Tom Kralidis
 # Copyright (c) 2021 IBL Software Engineering spol. s r. o.
 #
 # Permission is hereby granted, free of charge, to any person
@@ -35,7 +35,7 @@ import os
 
 import click
 
-from pywcmp.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
+from pywcmp.kpi import wcmp_kpis1
 from pywcmp.util import parse_wcmp
 
 from pywiscat.cli_helpers import cli_callbacks
@@ -188,7 +188,7 @@ def kpi(ctx, directory, file_list_file, group_by_authority, kpi, output_format, 
         except Exception as err:
             raise click.ClickException(err)
 
-        kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(exml)
+        kpis = wcmp_kpis1(exml)
 
         try:
             kpis_results = kpis.evaluate(kpi)

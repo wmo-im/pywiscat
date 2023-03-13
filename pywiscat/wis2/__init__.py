@@ -29,17 +29,14 @@
 
 import click
 
-from pywiscat.wis1 import wis1
-from pywiscat.wis2 import wis2
-
-__version__ = '0.1.dev0'
+from pywiscat.wis2.catalogue import get, search
 
 
 @click.group()
-@click.version_option(version=__version__)
-def cli():
+def wis2():
+    """WIS2 Global Discovery Catalogue (GDC) utilities"""
     pass
 
 
-cli.add_command(wis1)
-cli.add_command(wis2)
+wis2.add_command(search)
+wis2.add_command(get)
