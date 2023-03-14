@@ -31,8 +31,8 @@
 
 import json
 import unittest
-from pywiscat.wis1.util import (group_by_originator)
-from pywiscat.wis1.report import (group_search_results_by_organization)
+from pywiscat.wis1.util import group_by_originator
+from pywiscat.wis1.report import group_search_results_by_organization
 
 
 class WISCatalogueUtilTest(unittest.TestCase):
