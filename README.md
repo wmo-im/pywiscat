@@ -72,6 +72,20 @@ pywiscat wis1 report kpi -k1 --directory /path/to/metadata/files --output-format
 
 # list number of records per organization
 pywiscat wis1 report records-by-org --directory=/path/to/metadata/files
+
+## WIS2 workflows
+
+# search the WIS2 Global Discovery Catalogue (GDC)
+pywiscat wis2 search
+
+# search the WIS2 Global Discovery Catalogue (GDC) with a full text query
+pywiscat wis2 search -q radar
+
+# search the WIS2 Global Discovery Catalogue (GDC) with a bounding box query
+pywiscat wis2 search --bbox -142,42.-52,84
+
+# get more information about a WIS2 GDC record
+pywiscat wis2 get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
 ```
 
 ## Using the API
@@ -87,6 +101,16 @@ status = cache_catalogue('/path/to/directory')
 
 # search for terms (case-insensitive) and group by organization
 results_dict = group_search_results_by_organization('path/to/directory', terms=['nwp', 'model'])
+
+## WIS2 workflows
+
+from pywiscat.wis2.catalogue import search, get
+
+# search catalogue
+results = search(q='radar', bbox=[-142, 42, -52, 84]))
+
+# get a single catalogue record
+results = get('urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8')
 ```
 
 

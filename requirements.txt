@@ -1,4 +1,7 @@
 click
+emoji-country-flag
+iso3166
 lxml
+prettytable
 pywcmp
 requests
