@@ -257,7 +257,6 @@ def get(ctx, identifier, verbosity):
 
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
 
-    links = []
     skip_rels = ['root', 'self', 'alternate', 'collection']
 
     result = get_gdc_record(identifier)
@@ -280,10 +279,10 @@ def get(ctx, identifier, verbosity):
 
     click.echo(f'\tDescription: {description}\n')
 
-    click.echo(f'\tLinks')
+    click.echo('\tLinks')
 
     for link in result['links']:
         if link['rel'] not in skip_rels:
             click.echo(f"\t\t{link['href']}")
 
-    click.echo(f"\n")
+    click.echo("\n")
