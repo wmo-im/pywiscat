@@ -28,6 +28,7 @@
 # =================================================================
 
 import logging
+import os
 from textwrap import indent, wrap
 
 import click
@@ -39,7 +40,8 @@ import requests
 from pywiscat.cli_helpers import cli_option_verbosity
 LOGGER = logging.getLogger(__name__)
 
-GDC_URL = 'https://api.weather.gc.ca/collections/wis2-discovery-metadata'
+GDC_URL = os.environ.get(
+    'PYWISCAT_GDC_URL', 'https://api.weather.gc.ca/collections/wis2-discovery-metadata')  # noqa
 
 
 def get_country_and_centre(identifier):
@@ -254,6 +256,10 @@ def get(ctx, identifier, verbosity):
     """Get a WIS2 GDC record by identifier"""
 
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
+
+    links = []
+    skip_rels = ['root', 'self', 'alternate', 'collection']
+
     result = get_gdc_record(identifier)
 
     if result is None:
@@ -262,7 +268,7 @@ def get(ctx, identifier, verbosity):
     country, centre_id = get_country_and_centre(result['id'])
     country = get_country_prettified(country)
 
-    click.echo('Record:\n')
+    click.echo(f"Record: {result['properties']['title']}\n")
     click.echo(f"\tID: {result['id']}\n")
     click.echo(f"\tCountry: {country}\n")
     click.echo(f"\tCentre: {centre_id}\n")
@@ -273,3 +279,11 @@ def get(ctx, identifier, verbosity):
     description = indent(description, '\t').strip()
 
     click.echo(f'\tDescription: {description}\n')
+
+    click.echo(f'\tLinks')
+
+    for link in result['links']:
+        if link['rel'] not in skip_rels:
+            click.echo(f"\t\t{link['href']}")
+
+    click.echo(f"\n")
