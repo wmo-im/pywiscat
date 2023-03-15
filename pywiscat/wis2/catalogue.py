@@ -87,6 +87,7 @@ def search_gdc(**kwargs: dict) -> dict:
     """
 
     params = dict()
+    title_maxlen = 50
 
     kwargs2 = kwargs
 
@@ -158,13 +159,21 @@ def search_gdc(**kwargs: dict) -> dict:
             'data policy'
         ]
 
-        output['records'].append((
-            item['id'],
-            centre_id,
-            item['properties']['title'],
-            item['properties']['wmo:topicHierarchy'],
-            item['properties']['wmo:dataPolicy']['name']
-        ))
+        if len(item['properties']['title']) > title_maxlen:
+            title_short = f"{item['properties']['title'][:title_maxlen]}..."
+        else:
+            title_short = item['properties']['title']
+
+        try:
+            output['records'].append((
+                item['id'],
+                centre_id,
+                title_short,
+                item['properties']['wmo:topicHierarchy'],
+                item['properties']['wmo:dataPolicy']['name']
+            ))
+        except KeyError as err:
+            LOGGER.debug(f"Record {item['id']} missing field: {err}")
 
     return output
 
@@ -229,13 +238,12 @@ def search(ctx, type_='dataset', begin=None, end=None, q=None,
 
     pt = PrettyTable()
     pt.field_names = results['fields']
-    pt.align['title'] = 'l'
-    pt.align['country'] = 'l'
+    pt.align = 'l'
 
     for record in results['records']:
         pt.add_row(record)
 
-    click.echo(pt)
+    click.echo(pt.get_string())
 
 
 @click.command()
