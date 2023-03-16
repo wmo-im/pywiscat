@@ -77,6 +77,7 @@ def search_gdc(**kwargs: dict) -> dict:
     Search the GDC
 
     :param kwargs: `dict` of GDC query parameters:
+                   - q: `str` of full-text search
                    - bbox: `list` of minx, miny, maxx, maxy
                    - begin: `str` of begin datetime
                    - end: `str` of end datetime
@@ -129,6 +130,8 @@ def search_gdc(**kwargs: dict) -> dict:
         if value is not None:
             if key == 'bbox':
                 params['bbox'] = ','.join(str(t) for t in value)
+            elif key == 'q':
+                params['q'] = value.replace('/', '\/')
             else:
                 params[key] = value
 
@@ -180,13 +183,13 @@ def search_gdc(**kwargs: dict) -> dict:
     return output
 
 
-def get_gdc_record(identifier: str) -> dict:
+def get_gdc_record(identifier: str) -> tuple:
     """
     Get GDC record by identifier
 
     :param identifier: record identifier
 
-    :returns: `dict` of record summary
+    :returns: `tuple` of URL and record
     """
 
     url = f'{GDC_URL}/items/{identifier}'
@@ -198,7 +201,7 @@ def get_gdc_record(identifier: str) -> dict:
         LOGGER.warning(f'ERROR: {response.text}')
         return
 
-    return response.json()
+    return response.url, response.json()
 
 
 @click.command()
@@ -259,7 +262,7 @@ def get(ctx, identifier, verbosity):
 
     skip_rels = ['root', 'self', 'alternate', 'collection']
 
-    result = get_gdc_record(identifier)
+    url, result = get_gdc_record(identifier)
 
     if result is None:
         raise click.ClickException('Record identifier not found')
@@ -279,10 +282,11 @@ def get(ctx, identifier, verbosity):
 
     click.echo(f'\tDescription: {description}\n')
 
-    click.echo('\tLinks')
+    click.echo('\tLinks:')
 
     for link in result['links']:
         if link['rel'] not in skip_rels:
             click.echo(f"\t\t{link['href']}")
 
+    click.echo(f"\n\tURL to full metadata: {url}\n")
     click.echo("\n")
