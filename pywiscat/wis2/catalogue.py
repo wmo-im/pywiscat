@@ -131,7 +131,7 @@ def search_gdc(**kwargs: dict) -> dict:
             if key == 'bbox':
                 params['bbox'] = ','.join(str(t) for t in value)
             elif key == 'q':
-                params['q'] = value.replace('/', '\/')
+                params['q'] = value.replace('/', '\\/')
             else:
                 params[key] = value
 
