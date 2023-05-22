@@ -82,7 +82,6 @@ def search_gdc(**kwargs: dict) -> dict:
                    - begin: `str` of begin datetime
                    - end: `str` of end datetime
                    - type_: record type
-                   - topic: topic hierarchy
                    - sortby: sort property and direction (i.e. prop:D|A)
                      (default A)
 
@@ -160,7 +159,6 @@ def search_gdc(**kwargs: dict) -> dict:
             'id',
             'centre',
             'title',
-            'topic',
             'data policy'
         ]
 
@@ -174,8 +172,7 @@ def search_gdc(**kwargs: dict) -> dict:
                 item['id'],
                 centre_id,
                 title_short,
-                item['properties']['wmo:topicHierarchy'],
-                item['properties']['wmo:dataPolicy']['name']
+                item['properties']['wmo:dataPolicy']
             ))
         except KeyError as err:
             LOGGER.debug(f"Record {item['id']} missing field: {err}")
@@ -210,7 +207,7 @@ def get_gdc_record(identifier: str) -> tuple:
 @click.option('--bbox', '-b', help='Bounding box filter')
 @click.option('--query', '-q', 'q', help='Full text query')
 def search(ctx, type_='dataset', begin=None, end=None, q=None,
-           bbox=[], topic=None, sortby=None, verbosity='NOTSET'):
+           bbox=[], sortby=None, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -224,7 +221,6 @@ def search(ctx, type_='dataset', begin=None, end=None, q=None,
         end=end,
         q=q,
         bbox=bbox2,
-        topic=topic,
         sortby=sortby
     )
 
@@ -274,8 +270,7 @@ def get(ctx, identifier, verbosity):
     click.echo(f"\tID: {result['id']}\n")
     click.echo(f"\tCountry: {country}\n")
     click.echo(f"\tCentre: {centre_id}\n")
-    click.echo(f"\tTopic: {result['properties']['wmo:topicHierarchy']}\n")
-    click.echo(f"\tData policy: {result['properties']['wmo:dataPolicy']['name']}\n")  # noqa
+    click.echo(f"\tData policy: {result['properties']['wmo:dataPolicy']}\n")
 
     description = '\n'.join(wrap(result['properties']['description']))
     description = indent(description, '\t').strip()
