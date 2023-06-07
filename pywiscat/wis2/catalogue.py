@@ -53,9 +53,21 @@ def get_country_and_centre(identifier):
     :returns: `tuple` of country and centre id
     """
 
+    country = centre_id = None
     tokens = identifier.split(':')
 
-    return tokens[3], tokens[4]
+    if ':' not in identifier:
+        tokens = identifier.split('.')
+        LOGGER.debug('WCMP2 identifier is not compliant')
+        country, centre_id = tokens[0], tokens[1]
+    if len(tokens) < 5:
+        LOGGER.debug('WCMP2 identifier is not compliant')
+        country, centre_id = tokens[0], tokens[1]
+
+    LOGGER.debug(f'Splitting {identifier}')
+    country, centre_id = tokens[3], tokens[4]
+
+    return country, centre_id
 
 
 def get_country_prettified(country):
@@ -67,7 +79,10 @@ def get_country_prettified(country):
     :returns: `str` prettified country text
     """
 
-    iso3166 = countries.get(country)
+    try:
+        iso3166 = countries.get(country)
+    except KeyError:
+        return None
 
     return flag.flagize(f'{iso3166.name} :{iso3166.alpha2}:')
 
@@ -167,12 +182,22 @@ def search_gdc(**kwargs: dict) -> dict:
         else:
             title_short = item['properties']['title']
 
+        # TODO: remove safeguard once WCMP2 is finalized
+        try:
+            if isinstance(item['properties']['wmo:dataPolicy'], dict):
+                data_policy = item['properties']['wmo:dataPolicy']['name']
+            else:
+                data_policy = item['properties']['wmo:dataPolicy']
+        except KeyError:
+            LOGGER.warning('Missing wmo:dataPolicy')
+            data_policy = 'missing'
+
         try:
             output['records'].append((
                 item['id'],
                 centre_id,
                 title_short,
-                item['properties']['wmo:dataPolicy']
+                data_policy
             ))
         except KeyError as err:
             LOGGER.debug(f"Record {item['id']} missing field: {err}")
