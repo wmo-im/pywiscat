@@ -4,8 +4,8 @@
 
 ## Pythonic API to WMO WIS Catalogue
 
-pywiscat provides a Pythonic API atop the WMO WIS Catalogue in support
-of reporting and analysis of the WIS Catalogue and Metadata.
+pywiscat provides a Pythonic API atop the WMO WIS2 Catalogue in support
+of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata.
 
 ## Installation
 
@@ -34,7 +34,7 @@ python3 setup.py install
 
 ## Running
 
-The canonical URL for the GDC is 'https://api.weather.gc.ca/collections/wis2-discovery-metadata.
+The canonical URL for the GDC is https://api.weather.gc.ca/collections/wis2-discovery-metadata.
 
 To use a different catalogue, set the `PYWISCAT_GDC_URL` environmnent variable before running pywiscat.
 
@@ -43,40 +43,6 @@ From command line:
 ```bash
 # fetch version
 pywiscat --version
-
-## WIS 1.0 workflows
-
-# catalogue management
-
-# download bundle of WIS metadata to disk
-pywiscat wis1 catalogue cache --directory /path/to/metadata/files
-
-# search for terms (case-insensitive) and group by organization
-
-# search for 'nwp'
-pywiscat wis1 report terms-by-org --directory=/path/to/metadata/files --term nwp
-
-# search for 'nwp' and 'model' (exclusive)
-pywiscat wis1 report terms-by-org --directory=/path/to/metadata/files --term nwp --term model
-
-# search for 'nwp' in verbose mode (Python logging levels)
-pywiscat wis1 report terms-by-org --directory=/path/to/metadata/files --term nwp --verbosity DEBUG
-
-# KPI assesment
-
-# run KPI assesment (aka pywcmp) on all metadata files in a directory with default ("brief") output
-pywiscat wis1 report kpi --directory /path/to/metadata/files
-
-# run KPI assesment on selected metadata files printing out the "summary" section for each file
-pywiscat wis1 report kpi --file-list /path/to/metadata/file_list.json --output-format summary
-
-# run assesment of KPI 1 (ATS) on all metadata files in a directory with "full" output
-pywiscat wis1 report kpi -k1 --directory /path/to/metadata/files --output-format full
-
-# other reports
-
-# list number of records per organization
-pywiscat wis1 report records-by-org --directory=/path/to/metadata/files
 
 ## WIS2 workflows
 
@@ -95,17 +61,6 @@ pywiscat wis2 get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
 
 ## Using the API
 ```python
-
-## WIS 1.0 workflows
-
-from pywiscat.wis1.catalogue import cache_catalogue
-from pywiscat.wis1.report import group_search_results_by_organization
-
-# catalogue management
-status = cache_catalogue('/path/to/directory')
-
-# search for terms (case-insensitive) and group by organization
-results_dict = group_search_results_by_organization('path/to/directory', terms=['nwp', 'model'])
 
 ## WIS2 workflows
 

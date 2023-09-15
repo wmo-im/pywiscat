@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2021 Tom Kralidis
+# Copyright (c) 2023 Tom Kralidis
 # Copyright (c) 2021, IBL Software Engineering spol. s r. o.
 #
 # Permission is hereby granted, free of charge, to any person
@@ -29,10 +29,7 @@
 #
 # =================================================================
 
-import json
 import unittest
-from pywiscat.wis1.util import group_by_originator
-from pywiscat.wis1.report import group_search_results_by_organization
 
 
 class WISCatalogueUtilTest(unittest.TestCase):
@@ -45,26 +42,6 @@ class WISCatalogueUtilTest(unittest.TestCase):
     def tearDown(self):
         """return to pristine state"""
         pass
-
-    def test_group_by_originator(self):
-        """Simple test of grouping records by originator"""
-
-        with open('tests/data/small_list.json', 'r', encoding='utf-8') as file_list_json:
-            file_list = json.load(file_list_json)
-            results = group_by_originator(file_list, False)
-            self.assertEqual(results['ECMWF'], 2)
-
-    def test_term_by_originator(self):
-        """Simple test of search for a term with grouping"""
-
-        results = group_search_results_by_organization('tests/data/', 'grib', False)
-        self.assertEqual(results['ECMWF'], 2)
-
-    def test_kpi(self):
-        """Simple test running KPI (pywcmp) on multiple files"""
-
-        results = group_search_results_by_organization('tests/data/', 'grib', False)
-        self.assertEqual(results['ECMWF'], 2)
 
 
 if __name__ == '__main__':
