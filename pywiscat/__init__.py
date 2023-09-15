@@ -32,7 +32,7 @@ import click
 from pywiscat.wis1 import wis1
 from pywiscat.wis2 import wis2
 
-__version__ = '0.1.0'
+__version__ = '0.1.dev0'
 
 
 @click.group()
