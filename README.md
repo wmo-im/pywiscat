@@ -143,8 +143,24 @@ python3 tests/run_tests.py
 ## Releasing
 
 ```bash
+# create release (x.y.z is the release version)
+vi pywiscat/__init__.py  # update __version__
+git commit -am 'update release version x.y.z'
+git push origin master
+git tag -a x.y.z -m 'tagging release version x.y.z'
+git push --tags
+
+# upload to PyPI
+rm -fr build dist *.egg-info
 python3 setup.py sdist bdist_wheel --universal
 twine upload dist/*
+
+# publish release on GitHub (https://github.com/wmo-im/pywiscat/releases/new)
+
+# bump version back to dev
+vi pywiscat/__init__.py  # update __version__
+git commit -am 'back to dev'
+git push origin master
 ```
 
 ## Code Conventions
