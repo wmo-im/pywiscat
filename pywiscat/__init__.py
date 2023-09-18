@@ -29,7 +29,6 @@
 
 import click
 
-from pywiscat.wis1 import wis1
 from pywiscat.wis2 import wis2
 
 __version__ = '0.1.dev0'
@@ -41,5 +40,4 @@ def cli():
     pass
 
 
-cli.add_command(wis1)
 cli.add_command(wis2)
