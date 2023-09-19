@@ -87,7 +87,7 @@ def get_country_prettified(country):
     return flag.flagize(f'{iso3166.name} :{iso3166.alpha2}:')
 
 
-def search_gdc(**kwargs: dict) -> dict:
+def search(**kwargs: dict) -> dict:
     """
     Search the GDC
 
@@ -108,13 +108,13 @@ def search_gdc(**kwargs: dict) -> dict:
 
     kwargs2 = kwargs
 
-    sortby = kwargs2.pop('sortby')
-    _ = kwargs2.pop('type_')
+    sortby = kwargs2.pop('sortby', None)
+    _ = kwargs2.pop('type_', None)
     datetime_ = None
     sortby2 = None
 
-    begin = kwargs2.pop('begin')
-    end = kwargs2.pop('end')
+    begin = kwargs2.pop('begin', None)
+    end = kwargs2.pop('end', None)
 
     # if type is not None:
     #    params['type'] = type_
@@ -156,7 +156,7 @@ def search_gdc(**kwargs: dict) -> dict:
     LOGGER.debug(f'URL: {response.url}')
 
     if not response.ok:
-        LOGGER.warning(f'ERROR: {response.text}')
+        LOGGER.debug(f'ERROR: {response.text}')
         return
 
     response_json = response.json()
@@ -205,7 +205,7 @@ def search_gdc(**kwargs: dict) -> dict:
     return output
 
 
-def get_gdc_record(identifier: str) -> tuple:
+def get(identifier: str) -> tuple:
     """
     Get GDC record by identifier
 
@@ -220,19 +220,18 @@ def get_gdc_record(identifier: str) -> tuple:
     LOGGER.debug(f'URL: {response.url}')
 
     if not response.ok:
-        LOGGER.warning(f'ERROR: {response.text}')
-        return
+        LOGGER.debug(f'ERROR: {response.text}')
 
     return response.url, response.json()
 
 
-@click.command()
+@click.command('search')
 @click.pass_context
-@cli_option_verbosity
 @click.option('--bbox', '-b', help='Bounding box filter')
 @click.option('--query', '-q', 'q', help='Full text query')
-def search(ctx, type_='dataset', begin=None, end=None, q=None,
-           bbox=[], sortby=None, verbosity='NOTSET'):
+@cli_option_verbosity
+def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
+               bbox=[], sortby=None, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -250,7 +249,7 @@ def search(ctx, type_='dataset', begin=None, end=None, q=None,
     )
 
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
-    results = search_gdc(**params)
+    results = search(**params)
 
     if results is None:
         raise click.ClickException('Could not query catalogue')
@@ -272,21 +271,21 @@ def search(ctx, type_='dataset', begin=None, end=None, q=None,
     click.echo(pt.get_string())
 
 
-@click.command()
+@click.command('get')
 @click.pass_context
-@cli_option_verbosity
 @click.argument('identifier')
-def get(ctx, identifier, verbosity):
+@cli_option_verbosity
+def get_gdc_record(ctx, identifier, verbosity):
     """Get a WIS2 GDC record by identifier"""
 
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
 
     skip_rels = ['root', 'self', 'alternate', 'collection']
 
-    url, result = get_gdc_record(identifier)
+    url, result = get(identifier)
 
-    if result is None:
-        raise click.ClickException('Record identifier not found')
+    if 'description' in result:
+        raise click.ClickException(f'Record identifier {identifier} not found')
 
     country, centre_id = get_country_and_centre(result['id'])
     country = get_country_prettified(country)

@@ -29,7 +29,7 @@
 
 import click
 
-from pywiscat.wis2.catalogue import get, search
+from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
 
 
 @click.group()
@@ -38,5 +38,5 @@ def wis2():
     pass
 
 
-wis2.add_command(search)
-wis2.add_command(get)
+wis2.add_command(search_gdc)
+wis2.add_command(get_gdc_record)
