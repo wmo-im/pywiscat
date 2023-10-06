@@ -305,7 +305,7 @@ def get_gdc_record(ctx, identifier, verbosity):
 
     for link in result['links']:
         if link['rel'] not in skip_rels:
-            click.echo(f"\t\t{link['href']}")
+            click.echo(f"\t\t- {link['href']}")
 
     click.echo(f"\n\tURL to full metadata: {url}\n")
     click.echo("\n")
