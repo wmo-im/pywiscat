@@ -59,13 +59,13 @@ def get_country_and_centre(identifier):
     if ':' not in identifier:
         tokens = identifier.split('.')
         LOGGER.debug('WCMP2 identifier is not compliant')
-        country, centre_id = tokens[0], tokens[1]
+        country, centre_id = tokens[1].rsplit('-')[0], tokens[1]
     if len(tokens) < 5:
         LOGGER.debug('WCMP2 identifier is not compliant')
-        country, centre_id = tokens[0], tokens[1]
+        country, centre_id = tokens[1].rsplit('-')[0], tokens[1]
 
     LOGGER.debug(f'Splitting {identifier}')
-    country, centre_id = tokens[3], tokens[4]
+    country, centre_id = tokens[3].rsplit('-')[0], tokens[3]
 
     return country, centre_id
 
