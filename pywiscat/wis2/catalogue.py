@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2023 Tom Kralidis
+# Copyright (c) 2024 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -40,8 +40,8 @@ import requests
 from pywiscat.cli_helpers import cli_option_verbosity
 LOGGER = logging.getLogger(__name__)
 
-GDC_URL = os.environ.get(
-    'PYWISCAT_GDC_URL', 'https://api.weather.gc.ca/collections/wis2-discovery-metadata')  # noqa
+GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://api.weather.gc.ca')
+GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'
 
 
 def get_country_and_centre(identifier):
@@ -93,6 +93,7 @@ def search(**kwargs: dict) -> dict:
 
     :param kwargs: `dict` of GDC query parameters:
                    - q: `str` of full-text search
+                   - data_policy: `str` of data policy
                    - bbox: `list` of minx, miny, maxx, maxy
                    - begin: `str` of begin datetime
                    - end: `str` of end datetime
@@ -115,6 +116,7 @@ def search(**kwargs: dict) -> dict:
 
     begin = kwargs2.pop('begin', None)
     end = kwargs2.pop('end', None)
+    data_policy = kwargs2.pop('data_policy', None)
 
     # if type is not None:
     #    params['type'] = type_
@@ -138,6 +140,10 @@ def search(**kwargs: dict) -> dict:
             sortby2 = f'{sortby}:A'
     if sortby2 is not None:
         params['sortby'] = sortby2
+
+    LOGGER.debug('Detecting data policy')
+    if data_policy is not None:
+        params['wmo:dataPolicy'] = data_policy
 
     LOGGER.debug('Detecting all other query parameters')
     for key, value in kwargs2.items():
@@ -227,11 +233,17 @@ def get(identifier: str) -> tuple:
 
 @click.command('search')
 @click.pass_context
-@click.option('--bbox', '-b', help='Bounding box filter')
 @click.option('--query', '-q', 'q', help='Full text query')
+@click.option('--bbox', '-b', help='Bounding box filter')
+@click.option('--data-policy', '-dp', 'data_policy',
+              type=click.Choice(['core', 'recommended']),
+              help='Data policy')
+@click.option('--begin', 'begin', help='Begin time (in RFC3339 format)')
+@click.option('--end', 'end', help='End time (in RFC3339 format)')
+@click.option('--sortby', '-s', 'sortby', help='Property to sort by')
 @cli_option_verbosity
 def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
-               bbox=[], sortby=None, verbosity='NOTSET'):
+               bbox=[], sortby=None, data_policy=None, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -245,7 +257,8 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
         end=end,
         q=q,
         bbox=bbox2,
-        sortby=sortby
+        sortby=sortby,
+        data_policy=data_policy
     )
 
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
