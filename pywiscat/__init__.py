@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2023 Tom Kralidis
+# Copyright (c) 2024 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -29,7 +29,7 @@
 
 import click
 
-from pywiscat.wis2 import wis2
+from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
 
 __version__ = '0.1.dev0'
 
@@ -40,4 +40,5 @@ def cli():
     pass
 
 
-cli.add_command(wis2)
+cli.add_command(search_gdc)
+cli.add_command(get_gdc_record)

@@ -34,7 +34,7 @@ python3 setup.py install
 
 ## Running
 
-The canonical URL for the GDC is https://api.weather.gc.ca/collections/wis2-discovery-metadata.
+The canonical URL for the GDC is https://api.weather.gc.ca.
 
 To use a different catalogue, set the `PYWISCAT_GDC_URL` environmnent variable before running pywiscat.
 
@@ -47,16 +47,19 @@ pywiscat --version
 ## WIS2 workflows
 
 # search the WIS2 Global Discovery Catalogue (GDC)
-pywiscat wis2 search
+pywiscat search
 
 # search the WIS2 Global Discovery Catalogue (GDC) with a full text query
-pywiscat wis2 search -q radar
+pywiscat search --query radar
+
+# search the WIS2 Global Discovery Catalogue (GDC) for only recommended data
+pywiscat search --data-policy recommended
 
 # search the WIS2 Global Discovery Catalogue (GDC) with a bounding box query
-pywiscat wis2 search --bbox -142,42.-52,84
+pywiscat search --bbox -142,42,-52,84
 
 # get more information about a WIS2 GDC record
-pywiscat wis2 get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
+pywiscat get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
 ```
 
 ## Using the API
