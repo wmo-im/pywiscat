@@ -34,7 +34,7 @@ python3 setup.py install
 
 ## Running
 
-The canonical URL for the GDC is https://api.weather.gc.ca.
+The canonical URL for the GDC is https://wis2-gdc.weather.gc.ca.
 
 To use a different catalogue, set the `PYWISCAT_GDC_URL` environmnent variable before running pywiscat.
 

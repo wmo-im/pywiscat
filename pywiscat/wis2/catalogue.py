@@ -40,7 +40,7 @@ import requests
 from pywiscat.cli_helpers import cli_option_verbosity
 LOGGER = logging.getLogger(__name__)
 
-GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://api.weather.gc.ca')
+GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca')
 GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'
 
 
@@ -93,11 +93,14 @@ def search(**kwargs: dict) -> dict:
 
     :param kwargs: `dict` of GDC query parameters:
                    - q: `str` of full-text search
+                   - centre_id: `str` of centre-id
                    - data_policy: `str` of data policy
                    - bbox: `list` of minx, miny, maxx, maxy
                    - begin: `str` of begin datetime
                    - end: `str` of end datetime
                    - type_: record type
+                   - limit: number of records to limit
+                   - offset: startposition of result set
                    - sortby: sort property and direction (i.e. prop:D|A)
                      (default A)
 
@@ -112,7 +115,6 @@ def search(**kwargs: dict) -> dict:
     sortby = kwargs2.pop('sortby', None)
     _ = kwargs2.pop('type_', None)
     datetime_ = None
-    sortby2 = None
 
     begin = kwargs2.pop('begin', None)
     end = kwargs2.pop('end', None)
@@ -134,12 +136,7 @@ def search(**kwargs: dict) -> dict:
 
     LOGGER.debug('Detecting sortby')
     if sortby is not None:
-        if ':' in sortby:
-            sortby2 = sortby
-        else:
-            sortby2 = f'{sortby}:A'
-    if sortby2 is not None:
-        params['sortby'] = sortby2
+        params['sortby'] = sortby
 
     LOGGER.debug('Detecting data policy')
     if data_policy is not None:
@@ -152,6 +149,11 @@ def search(**kwargs: dict) -> dict:
                 params['bbox'] = ','.join(str(t) for t in value)
             elif key == 'q':
                 params['q'] = value.replace('/', '\\/')
+            elif key == 'centre_id':
+                if 'q' in params:
+                    params['q'] += f' AND "{value}"'
+                else:
+                    params['q'] = f'"{value}"'
             else:
                 params[key] = value
 
@@ -168,7 +170,8 @@ def search(**kwargs: dict) -> dict:
     response_json = response.json()
 
     output = {
-        'results': response_json['numberMatched'],
+        'matched': response_json['numberMatched'],
+        'returned': response_json['numberReturned'],
         'records': []
     }
 
@@ -235,15 +238,21 @@ def get(identifier: str) -> tuple:
 @click.pass_context
 @click.option('--query', '-q', 'q', help='Full text query')
 @click.option('--bbox', '-b', help='Bounding box filter')
+@click.option('--centre-id', '-c', 'centre_id', help='Centre identifier')
 @click.option('--data-policy', '-dp', 'data_policy',
               type=click.Choice(['core', 'recommended']),
               help='Data policy')
 @click.option('--begin', 'begin', help='Begin time (in RFC3339 format)')
 @click.option('--end', 'end', help='End time (in RFC3339 format)')
 @click.option('--sortby', '-s', 'sortby', help='Property to sort by')
+@click.option('--limit', '-o', 'limit', type=int, default=500,
+              help='number of records to limit')
+@click.option('--offset', '-o', 'offset', type=int, default=0,
+              help='startposition of result set')
 @cli_option_verbosity
 def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
-               bbox=[], sortby=None, data_policy=None, verbosity='NOTSET'):
+               bbox=[], sortby=None, centre_id=None, data_policy=None,
+               limit=500, offset=0, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -258,18 +267,23 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
         q=q,
         bbox=bbox2,
         sortby=sortby,
+        limit=limit,
+        offset=offset,
+        centre_id=centre_id,
         data_policy=data_policy
     )
 
+    click.echo(limit)
+    click.echo(offset)
     click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
     results = search(**params)
 
     if results is None:
         raise click.ClickException('Could not query catalogue')
 
-    count = results['results']
+    count = results['matched']
 
-    click.echo(f"Results: {results['results']} record{'s'[:count^1]}")
+    click.echo(f"Showing {results['returned']} of {results['matched']} record{'s'[:count^1]}")  # noqa
 
     if count == 0:
         return
