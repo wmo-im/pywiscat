@@ -303,6 +303,8 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
 def get_gdc_record(ctx, identifier, verbosity):
     """Get a WIS2 GDC record by identifier"""
 
+    earth_system_discipline = None
+
     click.echo(f'\nQuerying WIS2 GDC 🗃️  {GDC_URL} ...\n')
 
     skip_rels = ['root', 'self', 'alternate', 'collection']
@@ -316,6 +318,8 @@ def get_gdc_record(ctx, identifier, verbosity):
     country = get_country_prettified(country)
 
     click.echo(f"Record: {result['properties']['title']}\n")
+
+    click.echo(f"URL to full metadata: {url}\n")
     click.echo(f"\tID: {result['id']}\n")
     click.echo(f"\tCountry: {country}\n")
     click.echo(f"\tCentre: {centre_id}\n")
@@ -326,11 +330,20 @@ def get_gdc_record(ctx, identifier, verbosity):
 
     click.echo(f'\tDescription: {description}\n')
 
+    for theme in result['properties']['themes']:
+        if theme['scheme'] == 'http://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline':  # noqa
+            earth_system_discipline = theme['concepts'][0]['id']
+            break
+
+    if earth_system_discipline is not None:
+        click.echo(f'\tEarth system discipline: {earth_system_discipline}\n')
+
     click.echo('\tLinks:')
 
     for link in result['links']:
         if link['rel'] not in skip_rels:
-            click.echo(f"\t\t- {link['href']}")
+            click.echo(f"\t\t- href: {link['href']}")
+        if link.get('channel') is not None:
+            click.echo(f"\t\t  channel: {link['channel']}")
 
-    click.echo(f"\n\tURL to full metadata: {url}\n")
-    click.echo("\n")
+    click.echo('\n')
