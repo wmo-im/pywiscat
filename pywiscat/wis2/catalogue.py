@@ -273,9 +273,7 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
         data_policy=data_policy
     )
 
-    click.echo(limit)
-    click.echo(offset)
-    click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
+    click.echo(f'\nQuerying WIS2 GDC 🗃️  {GDC_URL} ...\n')
     results = search(**params)
 
     if results is None:
@@ -305,7 +303,7 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
 def get_gdc_record(ctx, identifier, verbosity):
     """Get a WIS2 GDC record by identifier"""
 
-    click.echo('\nQuerying WIS2 GDC 🗃️ ...\n')
+    click.echo(f'\nQuerying WIS2 GDC 🗃️  {GDC_URL} ...\n')
 
     skip_rels = ['root', 'self', 'alternate', 'collection']
 
