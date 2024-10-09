@@ -31,7 +31,7 @@ import click
 
 from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
 
-__version__ = '0.3.dev1'
+__version__ = '0.2.2'
 
 
 @click.group()
