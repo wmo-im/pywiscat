@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2024 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -107,7 +107,10 @@ def search(**kwargs: dict) -> dict:
     :returns: `dict` of results
     """
 
-    params = dict()
+    params = {
+        'f': 'json'
+    }
+
     title_maxlen = 50
 
     kwargs2 = kwargs
