@@ -54,6 +54,9 @@ pywiscat search --query radar
 # search the WIS2 Global Discovery Catalogue (GDC) for only recommended data
 pywiscat search --data-policy recommended
 
+# search the WIS2 Global Discovery Catalogue (GDC) by country
+pywiscat search --country Germany
+
 # search the WIS2 Global Discovery Catalogue (GDC) with a bounding box query
 pywiscat search --bbox -142,42,-52,84
 

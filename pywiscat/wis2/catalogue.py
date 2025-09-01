@@ -94,6 +94,7 @@ def search(**kwargs: dict) -> dict:
     :param kwargs: `dict` of GDC query parameters:
                    - q: `str` of full-text search
                    - centre_id: `str` of centre-id
+                   - country: `str` of country
                    - data_policy: `str` of data policy
                    - bbox: `list` of minx, miny, maxx, maxy
                    - begin: `str` of begin datetime
@@ -157,8 +158,12 @@ def search(**kwargs: dict) -> dict:
                     params['q'] += f' AND "{value}"'
                 else:
                     params['q'] = f'"{value}"'
+            elif key == 'country':
+                params['contacts.addresses.country'] = value
             else:
                 params[key] = value
+
+    params['f'] = 'json'
 
     LOGGER.debug(f'query parameters: {params}')
 
@@ -242,6 +247,7 @@ def get(identifier: str) -> tuple:
 @click.option('--query', '-q', 'q', help='Full text query')
 @click.option('--bbox', '-b', help='Bounding box filter')
 @click.option('--centre-id', '-c', 'centre_id', help='Centre identifier')
+@click.option('--country', '-co', 'country', help='Country')
 @click.option('--data-policy', '-dp', 'data_policy',
               type=click.Choice(['core', 'recommended']),
               help='Data policy')
@@ -254,8 +260,8 @@ def get(identifier: str) -> tuple:
               help='startposition of result set')
 @cli_option_verbosity
 def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
-               bbox=[], sortby=None, centre_id=None, data_policy=None,
-               limit=500, offset=0, verbosity='NOTSET'):
+               bbox=[], sortby=None, centre_id=None, country=None,
+               data_policy=None, limit=500, offset=0, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -273,6 +279,7 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
         limit=limit,
         offset=offset,
         centre_id=centre_id,
+        country=country,
         data_policy=data_policy
     )
 
