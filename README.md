@@ -27,8 +27,7 @@ cd pywiscat
 git clone https://github.com/wmo-im/pywiscat.git
 cd pywiscat
 pip3 install -r requirements.txt
-python3 setup.py build
-python3 setup.py install
+pip3 install .
 ```
 
 ## Running
@@ -113,9 +112,6 @@ python3 setup.py install
 ### Running tests
 
 ```bash
-# via setuptools
-python3 setup.py test
-# manually
 python3 tests/run_tests.py
 ```
 

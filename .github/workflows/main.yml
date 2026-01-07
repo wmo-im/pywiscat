@@ -4,13 +4,13 @@ on: [ push, pull_request ]
 
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.12"]
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@master
+    - uses: actions/setup-python@v6
       name: Setup Python ${{ matrix.python-version }}
       with:
         python-version: ${{ matrix.python-version }}
@@ -20,9 +20,9 @@ jobs:
         pip3 install -r requirements.txt
         pip3 install -r requirements-dev.txt
     - name: Install package 📦
-      run: python3 setup.py install
+      run: pip3 install .
     - name: run tests ⚙️
-      run: python3 setup.py test
+      run: python3 tests/run_tests.py
     - name: run flake8 ⚙️
       run: |
         find . -type f -name "*.py" | xargs flake8
