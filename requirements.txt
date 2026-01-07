@@ -2,4 +2,5 @@ click
 emoji-country-flag
 iso3166
 prettytable
+pywcmp
 requests
