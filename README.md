@@ -62,6 +62,25 @@ pywiscat search --bbox -142,42,-52,84
 
 # get more information about a WIS2 GDC record
 pywiscat get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
+
+## Archive utilities
+
+# download and extract a WIS2 GDC metadata archive zipfile to a specific directory
+pywiscat archive get /path/to/archive
+
+## Metrics analyzers
+
+# analyze core records by centre identifier
+pywiscat metrics core /path/to/archive
+
+# analyze recommended records by centre identifier
+pywiscat metrics recommended /path/to/archive
+
+# analyze Earth system disciplines by centre identifier
+pywiscat metrics earth-system-discipline /path/to/archive
+
+# analyze Key Performance Indicators (KPIs) by centre identifier
+pywiscat metrics kpi ca-eccc-msc /path/to/archive
 ```
 
 ## Using the API

@@ -28,7 +28,6 @@
 # =================================================================
 
 import logging
-import os
 from textwrap import indent, wrap
 
 import click
@@ -38,10 +37,9 @@ from prettytable import PrettyTable
 import requests
 
 from pywiscat.cli_helpers import cli_option_verbosity
-LOGGER = logging.getLogger(__name__)
+from pywiscat.env import GDC_URL
 
-GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca')
-GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'
+LOGGER = logging.getLogger(__name__)
 
 
 def get_country_and_centre(identifier):
