@@ -42,7 +42,7 @@ from pywiscat.env import GDC_URL
 LOGGER = logging.getLogger(__name__)
 
 
-def get_country_and_centre(identifier):
+def get_country_and_centre_id(identifier):
     """
     Get country and centre id from a WCMP2 identifier
 
@@ -183,7 +183,7 @@ def search(**kwargs: dict) -> dict:
 
     LOGGER.debug('Building up results')
     for item in response_json['features']:
-        country, centre_id = get_country_and_centre(item['id'])
+        country, centre_id = get_country_and_centre_id(item['id'])
 
         output['fields'] = [
             'id',
@@ -322,7 +322,7 @@ def get_gdc_record(ctx, identifier, verbosity):
     if 'description' in result:
         raise click.ClickException(f'Record identifier {identifier} not found')
 
-    country, centre_id = get_country_and_centre(result['id'])
+    country, centre_id = get_country_and_centre_id(result['id'])
     country = get_country_prettified(country)
 
     click.echo(f"Record: {result['properties']['title']}\n")
