@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2023 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 # Copyright (c) 2021, IBL Software Engineering spol. s r. o.
 #
 # Permission is hereby granted, free of charge, to any person
