@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2021 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -30,24 +30,7 @@
 import io
 import os
 import re
-from setuptools import Command, find_packages, setup
-import sys
-
-
-class PyTest(Command):
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import subprocess
-        errno = subprocess.call([sys.executable, os.path.join('tests',
-                                 'run_tests.py')])
-        raise SystemExit(errno)
+from setuptools import find_packages, setup
 
 
 def read(filename, encoding='utf-8'):
@@ -73,7 +56,7 @@ KEYWORDS = [
     'wis'
 ]
 
-DESCRIPTION = 'WMO WIS Catalogue analysis tool'
+DESCRIPTION = 'WMO WIS Catalogue Python client'
 
 # ensure a fresh MANIFEST file is generated
 if (os.path.exists('MANIFEST')):
@@ -113,6 +96,5 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
-    cmdclass={'test': PyTest},
     test_suite='tests.run_tests'
 )

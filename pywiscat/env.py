@@ -27,22 +27,7 @@
 #
 # =================================================================
 
-import click
+import os
 
-from pywiscat.wis2.archive import archive
-from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
-from pywiscat.wis2.metrics import metrics
-
-__version__ = '0.3.dev2'
-
-
-@click.group()
-@click.version_option(version=__version__)
-def cli():
-    pass
-
-
-cli.add_command(search_gdc)
-cli.add_command(get_gdc_record)
-cli.add_command(archive)
-cli.add_command(metrics)
+GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca')
+GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'

@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2025 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -28,7 +28,6 @@
 # =================================================================
 
 import logging
-import os
 from textwrap import indent, wrap
 
 import click
@@ -38,13 +37,12 @@ from prettytable import PrettyTable
 import requests
 
 from pywiscat.cli_helpers import cli_option_verbosity
+from pywiscat.env import GDC_URL
+
 LOGGER = logging.getLogger(__name__)
 
-GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca')
-GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'
 
-
-def get_country_and_centre(identifier):
+def get_country_and_centre_id(identifier):
     """
     Get country and centre id from a WCMP2 identifier
 
@@ -185,7 +183,7 @@ def search(**kwargs: dict) -> dict:
 
     LOGGER.debug('Building up results')
     for item in response_json['features']:
-        country, centre_id = get_country_and_centre(item['id'])
+        country, centre_id = get_country_and_centre_id(item['id'])
 
         output['fields'] = [
             'id',
@@ -324,7 +322,7 @@ def get_gdc_record(ctx, identifier, verbosity):
     if 'description' in result:
         raise click.ClickException(f'Record identifier {identifier} not found')
 
-    country, centre_id = get_country_and_centre(result['id'])
+    country, centre_id = get_country_and_centre_id(result['id'])
     country = get_country_prettified(country)
 
     click.echo(f"Record: {result['properties']['title']}\n")
