@@ -1,8 +1,10 @@
 # =================================================================
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
+#          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2026 Tom Kralidis
+# Copyright (c) 2026 IBL Software Engineering Portugal Lda.
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -69,18 +71,22 @@ def analyze_data_policy(data_policy: DataPolicy, archive_dir: str) -> dict:
 
     report = {}
 
-    LOGGER.debug(f'Analyzing {archive_dir} for {data_policy} records')
-    for f in glob(f'{archive_dir}/*.json'):
-        with open(f) as fh:
-            wcmp2 = json.load(fh)
-            centre_id = get_centre_id(wcmp2['id'])
+    file_list = glob(f'{archive_dir}/*.json')
+    if not file_list:
+        LOGGER.error(f'No files found in the archive folder "{archive_dir}".')
+    else:
+        LOGGER.debug(f'Analyzing {archive_dir} for {data_policy} records')
+        for f in file_list:
+            with open(f) as fh:
+                wcmp2 = json.load(fh)
+                centre_id = get_centre_id(wcmp2['id'])
 
-            data_policy2 = wcmp2['properties']['wmo:dataPolicy']
-            if data_policy2 == data_policy:
-                if centre_id not in report:
-                    report[centre_id] = 1
-                else:
-                    report[centre_id] += 1
+                data_policy2 = wcmp2['properties']['wmo:dataPolicy']
+                if data_policy2 == data_policy:
+                    if centre_id not in report:
+                        report[centre_id] = 1
+                    else:
+                        report[centre_id] += 1
 
     return dict(sorted(report.items()))
 
@@ -96,27 +102,31 @@ def analyze_earth_system_discipline(archive_dir: str) -> dict:
 
     report = {}
 
-    LOGGER.debug(f'Analyzing {archive_dir} for Earth system disciplines')
-    for f in glob(f'{archive_dir}/*.json'):
-        with open(f) as fh:
-            wcmp2 = json.load(fh)
-            centre_id = get_centre_id(wcmp2['id'])
+    file_list = glob(f'{archive_dir}/*.json')
+    if not file_list:
+        LOGGER.error(f'No files found in the archive folder "{archive_dir}".')
+    else:
+        LOGGER.debug(f'Analyzing {archive_dir} for Earth system disciplines')
+        for f in glob(f'{archive_dir}/*.json'):
+            with open(f) as fh:
+                wcmp2 = json.load(fh)
+                centre_id = get_centre_id(wcmp2['id'])
 
-            for theme in wcmp2['properties']['themes']:
-                if theme.get('scheme') == 'https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline':  # noqa
-                    for concept in theme.get('concepts', []):
-                        id_ = concept.get('id')
-                        LOGGER.debug(f'concept: {id_}')
+                for theme in wcmp2['properties']['themes']:
+                    if theme.get('scheme') == 'https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline':  # noqa
+                        for concept in theme.get('concepts', []):
+                            id_ = concept.get('id')
+                            LOGGER.debug(f'concept: {id_}')
 
-                        if centre_id not in report:
-                            report[centre_id] = {
-                                id_: 1
-                            }
-                        else:
-                            if id_ not in report[centre_id]:
-                                report[centre_id][id_] = 1
+                            if centre_id not in report:
+                                report[centre_id] = {
+                                    id_: 1
+                                }
                             else:
-                                report[centre_id][id_] += 1
+                                if id_ not in report[centre_id]:
+                                    report[centre_id][id_] = 1
+                                else:
+                                    report[centre_id][id_] += 1
 
     return dict(sorted(report.items()))
 
@@ -149,12 +159,16 @@ def analyze_kpi(centre_id: str, archive_dir: str) -> dict:
             report[centre_id]['scoring'][wcmp2['id']] = results['summary']['percentage']  # noqa
 
     kpi_values = report[centre_id]['scoring'].values()
-    total = sum(kpi_values)
-    average = total / len(report[centre_id]['scoring'])
-    report[centre_id]['kpi_percentage_average'] = average
 
-    over80_total = sum(1 for value in kpi_values if value > 80)
-    report[centre_id]['kpi_percentage_over80_total'] = over80_total
+    if not kpi_values:
+        LOGGER.warning(f'no files for "{centre_id}"')
+    else:
+        total = sum(kpi_values)
+        average = total / len(report[centre_id]['scoring'])
+        report[centre_id]['kpi_percentage_average'] = average
+
+        over80_total = sum(1 for value in kpi_values if value > 80)
+        report[centre_id]['kpi_percentage_over80_total'] = over80_total
 
     return dict(sorted(report.items()))
 
