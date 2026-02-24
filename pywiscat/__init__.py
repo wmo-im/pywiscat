@@ -33,7 +33,7 @@ from pywiscat.wis2.archive import archive
 from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
 from pywiscat.wis2.metrics import metrics
 
-__version__ = '0.3.dev2'
+__version__ = '0.3.0'
 
 
 @click.group()
