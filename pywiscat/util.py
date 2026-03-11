@@ -27,23 +27,14 @@
 #
 # =================================================================
 
-import click
-
-from pywiscat.wis2.archive import archive
-from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
-from pywiscat.wis2.metrics import metrics
-from pywiscat.util import get_package_version
-
-__version__ = get_package_version()
+import importlib.metadata
 
 
-@click.group()
-@click.version_option(version=__version__)
-def cli():
-    pass
+def get_package_version() -> str:
+    """
+    Helper function to get package version
 
+    :returns: `str` of version of package
+    """
 
-cli.add_command(search_gdc)
-cli.add_command(get_gdc_record)
-cli.add_command(archive)
-cli.add_command(metrics)
+    return importlib.metadata.version('pywiscat')

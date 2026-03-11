@@ -26,7 +26,6 @@ cd pywiscat
 . bin/activate
 git clone https://github.com/wmo-im/pywiscat.git
 cd pywiscat
-pip3 install -r requirements.txt
 pip3 install .
 ```
 
@@ -104,9 +103,7 @@ python3 -m venv pywiscat
 cd pywiscat
 source bin/activate
 git clone https://github.com/wmo-im/pywiscat.git
-pip3 install -r requirements.txt
-pip3 install -r requirements-dev.txt
-python3 setup.py install
+pip3 install .
 ```
 
 ### Running tests
@@ -119,7 +116,7 @@ python3 tests/run_tests.py
 
 ```bash
 # create release (x.y.z is the release version)
-vi pywiscat/__init__.py  # update __version__
+vi pyproject.toml  # update [project]/version
 git commit -am 'update release version x.y.z'
 git push origin master
 git tag -a x.y.z -m 'tagging release version x.y.z'
@@ -127,13 +124,13 @@ git push --tags
 
 # upload to PyPI
 rm -fr build dist *.egg-info
-python3 setup.py sdist bdist_wheel --universal
+python3 -m build
 twine upload dist/*
 
 # publish release on GitHub (https://github.com/wmo-im/pywiscat/releases/new)
 
 # bump version back to dev
-vi pywiscat/__init__.py  # update __version__
+vi pyproject.toml  # update [project]/version
 git commit -am 'back to dev'
 git push origin master
 ```
