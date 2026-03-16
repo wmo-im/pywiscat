@@ -252,7 +252,7 @@ def get(identifier: str) -> tuple:
 @click.option('--begin', 'begin', help='Begin time (in RFC3339 format)')
 @click.option('--end', 'end', help='End time (in RFC3339 format)')
 @click.option('--sortby', '-s', 'sortby', help='Property to sort by')
-@click.option('--limit', '-o', 'limit', type=int, default=500,
+@click.option('--limit', '-l', 'limit', type=int, default=500,
               help='number of records to limit')
 @click.option('--offset', '-o', 'offset', type=int, default=0,
               help='startposition of result set')
