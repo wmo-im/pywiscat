@@ -29,5 +29,4 @@
 
 import os
 
-GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca')
-GDC_URL = f'{GDC_URL}/collections/wis2-discovery-metadata'
+GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata')  # noqa

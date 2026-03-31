@@ -31,9 +31,9 @@ pip3 install .
 
 ## Running
 
-The canonical URL for the GDC is https://wis2-gdc.weather.gc.ca.
+The default GDC used in pywiscat is https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata.
 
-To use a different catalogue, set the `PYWISCAT_GDC_URL` environmnent variable before running pywiscat.
+To use a different catalogue, set the `PYWISCAT_GDC_URL` environment variable before running pywiscat.
 
 From command line:
 
@@ -64,7 +64,14 @@ pywiscat get urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8
 ## Archive utilities
 
 # download and extract a WIS2 GDC metadata archive zipfile to a specific directory
+# downloads from PYWISCAT_GDC_URL by default
+# override with --global-discovery-catalogue (https://example.org/collections/wis2-discovery-metadata)
 pywiscat archive get /path/to/archive
+
+# compare GDC metadata archive zipfile to other GDC metadata archive zipfiles
+# this requires each GDC metadata archive zipfile to be downloaded and extracted via
+# pywiscat archive get /path/to/archive (directory MUST be identical)
+pywiscat archive compare /path/archive --centre-id ca-eccc-msc-global-discovery-catalogue
 
 ## Metrics analyzers
 
