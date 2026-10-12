@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pywmocat"
-version = "0.5.dev0"
+version = "0.5.0"
 description = "WMO WIS2 Global Discovery Catalogue / WIGOS Global Observing Facility Catalogue Python client"
 readme = "README.md"
 requires-python = ">=3.12"
