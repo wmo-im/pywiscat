@@ -27,6 +27,20 @@
 #
 # =================================================================
 
-import os
+import click
 
-GDC_URL = os.environ.get('PYWISCAT_GDC_URL', 'https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata')  # noqa
+from pywmocat.wigos_gofc import wigos_gofc
+from pywmocat.wis2_gdc import wis2_gdc
+from pywmocat.util import get_package_version
+
+__version__ = get_package_version()
+
+
+@click.group()
+@click.version_option(version=__version__)
+def cli():
+    pass
+
+
+cli.add_command(wis2_gdc)
+cli.add_command(wigos_gofc)

@@ -31,13 +31,12 @@ import logging
 from textwrap import indent, wrap
 
 import click
-import flag
-from iso3166 import countries
 from prettytable import PrettyTable
 import requests
 
-from pywiscat.cli_helpers import cli_option_verbosity
-from pywiscat.env import GDC_URL
+from pywmocat.cli_helpers import cli_option_verbosity
+from pywmocat.env import WIS2_GDC_URL
+from pywmocat.util import get_country_prettified
 
 LOGGER = logging.getLogger(__name__)
 
@@ -66,23 +65,6 @@ def get_country_and_centre_id(identifier):
     country, centre_id = tokens[3].rsplit('-')[0], tokens[3]
 
     return country, centre_id
-
-
-def get_country_prettified(country):
-    """
-    Get expanded country description
-
-    :param country: ISO 3166-3 country name
-
-    :returns: `str` prettified country text
-    """
-
-    try:
-        iso3166 = countries.get(country)
-    except KeyError:
-        return None
-
-    return flag.flagize(f'{iso3166.name} :{iso3166.alpha2}:')
 
 
 def search(**kwargs: dict) -> dict:
@@ -165,7 +147,7 @@ def search(**kwargs: dict) -> dict:
 
     LOGGER.debug(f'query parameters: {params}')
 
-    url = f'{GDC_URL}/items'
+    url = f'{WIS2_GDC_URL}/items'
     response = requests.get(url, params=params)
     LOGGER.debug(f'URL: {response.url}')
 
@@ -197,15 +179,7 @@ def search(**kwargs: dict) -> dict:
         else:
             title_short = item['properties']['title']
 
-        # TODO: remove safeguard once WCMP2 is finalized
-        try:
-            if isinstance(item['properties']['wmo:dataPolicy'], dict):
-                data_policy = item['properties']['wmo:dataPolicy']['name']
-            else:
-                data_policy = item['properties']['wmo:dataPolicy']
-        except KeyError:
-            LOGGER.warning('Missing wmo:dataPolicy')
-            data_policy = 'missing'
+        data_policy = item['properties']['wmo:dataPolicy']
 
         try:
             output['records'].append((
@@ -229,7 +203,7 @@ def get(identifier: str) -> tuple:
     :returns: `tuple` of URL and record
     """
 
-    url = f'{GDC_URL}/items/{identifier}'
+    url = f'{WIS2_GDC_URL}/items/{identifier}'
 
     response = requests.get(url)
     LOGGER.debug(f'URL: {response.url}')
@@ -257,9 +231,9 @@ def get(identifier: str) -> tuple:
 @click.option('--offset', '-o', 'offset', type=int, default=0,
               help='startposition of result set')
 @cli_option_verbosity
-def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
-               bbox=[], sortby=None, centre_id=None, country=None,
-               data_policy=None, limit=500, offset=0, verbosity='NOTSET'):
+def search_(ctx, type_='dataset', begin=None, end=None, q=None,
+            bbox=[], sortby=None, centre_id=None, country=None,
+            data_policy=None, limit=500, offset=0, verbosity='NOTSET'):
     """Search the WIS2 GDC"""
 
     if bbox:
@@ -281,7 +255,7 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
         data_policy=data_policy
     )
 
-    click.echo(f'\nQuerying WIS2 GDC 🗃️  {GDC_URL} ...\n')
+    click.echo(f'\nQuerying WIS2 GDC 🗃️  {WIS2_GDC_URL} ...\n')
     results = search(**params)
 
     if results is None:
@@ -308,12 +282,12 @@ def search_gdc(ctx, type_='dataset', begin=None, end=None, q=None,
 @click.pass_context
 @click.argument('identifier')
 @cli_option_verbosity
-def get_gdc_record(ctx, identifier, verbosity):
+def get_(ctx, identifier, verbosity):
     """Get a WIS2 GDC record by identifier"""
 
     earth_system_discipline = None
 
-    click.echo(f'\nQuerying WIS2 GDC 🗃️  {GDC_URL} ...\n')
+    click.echo(f'\nQuerying WIS2 GDC 🗃️  {WIS2_GDC_URL} ...\n')
 
     skip_rels = ['root', 'self', 'alternate', 'collection']
 

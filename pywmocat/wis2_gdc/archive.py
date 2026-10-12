@@ -31,58 +31,17 @@ import json
 import logging
 
 from glob import glob
-from io import BytesIO
 from typing import Union
-import zipfile
 
 import click
 from jsondiff import diff
 from pywcmp.wcmp2.ets import WMOCoreMetadataProfileTestSuite2
-import requests
 
-from pywiscat.cli_helpers import cli_option_verbosity
-from pywiscat.env import GDC_URL
+from pywmocat.cli_helpers import cli_option_verbosity
+from pywmocat.env import WIS2_GDC_URL
+from pywmocat.util import download_and_extract_archive
 
 LOGGER = logging.getLogger(__name__)
-
-
-def download_and_extract_archive(gdc_url: str, output_dir: str) -> bool:
-    """
-    Download and extract a metadata archive zipfile from a WIS2 GDC
-
-    :param gdc_url: URL of WIS2 GDC
-    :param output_dir: output directory
-
-    :returns: `bool` of result
-    """
-
-    archive_link = None
-
-    LOGGER.debug(f'Fetching GDC collection information from {gdc_url}')
-    response = requests.get(gdc_url, params={'f': 'json'})
-    response.raise_for_status()
-
-    response = response.json()
-
-    for link in response['links']:
-        if link.get('rel') == 'archives':
-            archive_link = link['href']
-            LOGGER.debug(f'Archive link found: {archive_link}')
-            break
-
-    if archive_link is None:
-        LOGGER.warning('Archive link not found')
-        return False
-
-    LOGGER.debug(f'Fetching metadata archive zipfile from {archive_link}')
-    response = requests.get(archive_link)
-    response.raise_for_status()
-
-    LOGGER.debug(f'Extracting zipfile to {output_dir}')
-    with zipfile.ZipFile(BytesIO(response.content)) as fh:
-        fh.extractall(output_dir)
-
-    return True
 
 
 def prepare_record(data: dict) -> dict:
@@ -200,8 +159,8 @@ def archive():
 @cli_option_verbosity
 @click.argument('output_dir')
 @click.option('--global-discovery-catalogue',
-              help=f'Global Discovery Catalogue (default={GDC_URL})',
-              default=GDC_URL)
+              help=f'Global Discovery Catalogue (default={WIS2_GDC_URL})',
+              default=WIS2_GDC_URL)
 def get(ctx, global_discovery_catalogue, output_dir, verbosity='NOTSET'):
     """Download and extract archive"""
 

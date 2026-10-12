@@ -31,9 +31,9 @@
 
 import unittest
 
-from pywiscat.wis2.catalogue import (
-    get_country_and_centre_id, get_country_prettified)
-from pywiscat.wis2.metrics import get_centre_id
+from pywmocat.util import get_country_prettified
+from pywmocat.wis2_gdc.catalogue import get_country_and_centre_id
+from pywmocat.wis2_gdc.metrics import get_centre_id
 
 
 class WISCatalogueUtilTest(unittest.TestCase):
