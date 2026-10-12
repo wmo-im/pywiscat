@@ -37,7 +37,7 @@ import logging
 import click
 from pywcmp.wcmp2.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
 
-from pywiscat.cli_helpers import cli_option_verbosity
+from pywmocat.cli_helpers import cli_option_verbosity
 
 LOGGER = logging.getLogger(__name__)
 

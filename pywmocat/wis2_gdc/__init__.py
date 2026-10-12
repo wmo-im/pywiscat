@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2023 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -29,14 +29,18 @@
 
 import click
 
-from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
+from pywmocat.wis2_gdc.archive import archive
+from pywmocat.wis2_gdc.catalogue import get_, search_
+from pywmocat.wis2_gdc.metrics import metrics
 
 
 @click.group()
-def wis2():
+def wis2_gdc():
     """WIS2 Global Discovery Catalogue (GDC) utilities"""
     pass
 
 
-wis2.add_command(search_gdc)
-wis2.add_command(get_gdc_record)
+wis2_gdc.add_command(search_)
+wis2_gdc.add_command(get_)
+wis2_gdc.add_command(archive)
+wis2_gdc.add_command(metrics)

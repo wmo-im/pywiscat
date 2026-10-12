@@ -27,14 +27,14 @@
 #
 # =================================================================
 
-import importlib.metadata
+import os
 
+DEFAULT_URL = 'https://wis2-gdc.weather.gc.ca/collections'
 
-def get_package_version() -> str:
-    """
-    Helper function to get package version
+WIS2_GDC_URL = os.environ.get(
+    'PYWMOCAT_WIS2_GDC_URL',
+    f'{DEFAULT_URL}/wis2-discovery-metadata')
 
-    :returns: `str` of version of package
-    """
-
-    return importlib.metadata.version('pywiscat')
+WIGOS_GOFC_URL = os.environ.get(
+    'PYWMOCAT_WIGOS_GOFC_URL',
+    f'{DEFAULT_URL}/wigos-observing-facility-metadata')

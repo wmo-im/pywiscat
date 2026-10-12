@@ -3,14 +3,14 @@ requires = ["setuptools>=46.4", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pywiscat"
+name = "pywmocat"
 version = "0.5.dev0"
-description = "WMO WIS Catalogue Python client"
+description = "WMO WIS2 Global Discovery Catalogue / WIGOS Global Observing Facility Catalogue Python client"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "Apache-2.0"
 license-files = ["LICENSE.md"]
-keywords = ["WMO", "WIS2"]
+keywords = ["WMO", "WIS2", "GDC", "WIGOS", "GOFC"]
 authors = [
     {name = "Tom Kralidis", email = "tomkralidis@gmail.com"}
 ]
@@ -43,10 +43,10 @@ dev = ["flake8"]
 release = ["build", "twine", "wheel"]
 
 [project.scripts]
-pywiscat = "pywiscat:cli"
+pywmocat = "pywmocat:cli"
 
 [project.urls]
-homepage = "https://github.com/World-Meteorological-Organization/pywiscat"
-source = "https://github.com/World-Meteorological-Organization/pywiscat"
-documentation = "https://github.com/World-Meteorological-Organization/pywiscat"
-issues = "https://github.com/World-Meteorological-Organization/pywiscat/issues"
+homepage = "https://github.com/World-Meteorological-Organization/pywmocat"
+source = "https://github.com/World-Meteorological-Organization/pywmocat"
+documentation = "https://github.com/World-Meteorological-Organization/pywmocat"
+issues = "https://github.com/World-Meteorological-Organization/pywmocat/issues"

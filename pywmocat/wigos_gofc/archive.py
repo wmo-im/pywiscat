@@ -27,23 +27,41 @@
 #
 # =================================================================
 
+import logging
+
 import click
 
-from pywiscat.wis2.archive import archive
-from pywiscat.wis2.catalogue import get_gdc_record, search_gdc
-from pywiscat.wis2.metrics import metrics
-from pywiscat.util import get_package_version
+from pywmocat.cli_helpers import cli_option_verbosity
+from pywmocat.env import WIGOS_GOFC_URL
+from pywmocat.uril import download_and_extract_archive
 
-__version__ = get_package_version()
+LOGGER = logging.getLogger(__name__)
 
 
 @click.group()
-@click.version_option(version=__version__)
-def cli():
+def archive():
+    """Run archive utilities against a WIGOS GOFC"""
+
     pass
 
 
-cli.add_command(search_gdc)
-cli.add_command(get_gdc_record)
-cli.add_command(archive)
-cli.add_command(metrics)
+@click.command()
+@click.pass_context
+@cli_option_verbosity
+@click.argument('output_dir')
+@click.option('--global-discovery-catalogue',
+              help=f'Global Discovery Catalogue (default={WIGOS_GOFC_URL})',
+              default=WIGOS_GOFC_URL)
+def get(ctx, global_discovery_catalogue, output_dir, verbosity='NOTSET'):
+    """Download and extract archive"""
+
+    gofc_url_ = global_discovery_catalogue
+
+    click.echo(f'Downloading and extracting zipfile from {gofc_url_} to {output_dir}')  # noqa
+    if not download_and_extract_archive(gofc_url_, output_dir):
+        click.echo('Download and extract failed.  Set -v DEBUG for more information')  # noqa
+
+    click.echo('Done')
+
+
+archive.add_command(get)
