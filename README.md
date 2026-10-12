@@ -37,12 +37,6 @@ The default WIS2 GDC used in pywmocat is https://wis2-gdc.weather.gc.ca/collecti
 
 To use a different WIS2 GDC, set the `PYWMOCAT_WIS2_GDC_URL` environment variable before running pywmocat.
 
-TODO: add default GOFC endpoint.
-
-To use a different WIGOS GOFC, set the `PYWMOCAT_WIGOS_GOFC_URL` environment variable before running pywmocat.
-
-From command line:
-
 ```bash
 # fetch version
 pywmocat --version
@@ -106,6 +100,13 @@ results = get('urn:x-wmo:md:can:eccc-msc:c7c9d726-c48a-49e3-98ab-78a1ab87cda8')
 
 ### WIGOS GOFC workflows
 
+The default WIS2 GDC used in pywmocat is TODO: add default GOFC endpoint.
+
+To use a different WIGOS GOFC, set the `PYWMOCAT_WIGOS_GOFC_URL` environment variable before running pywmocat.
+
+From command line:
+
+```bash
 # search the WIGOS Global Observing Catalogue (GOFC)
 pywmocat wigos-gofc search
 
@@ -124,7 +125,7 @@ pywmocat wigos-gofc get 0-20000-0-87344
 # downloads from PYWMOCAT_WIGOS_GOFC_URL by default
 # override with --global-discovery-catalogue (https://example.org/collections/wigos-observing-facility-metadata)
 pywmocat wigos-gofc archive get /path/to/archive
-
+```
 
 ### Using the API
 ```python
